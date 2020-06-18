@@ -14,7 +14,7 @@
 </el-col>
   <el-col :span="2" :offset="16">
     <div style="margin-top:16px">
-    <el-button type="primary" >关注</el-button>
+    <el-button type="primary" @click="addwatch()">关注</el-button>
   </div>
   </el-col>
     </el-row>
@@ -80,6 +80,7 @@
 <script>
 import { mapActions, mapMutations,mapGetters} from 'vuex'
 import comment from '@/views/components/comment.vue'
+import { addwatch } from '@/api/article'
 import { getOne,addimgPraise } from '@/api/Img'
 import simplemde from 'simplemde'
 import AsideBar from '@/views/layout/aside.vue'
@@ -103,6 +104,10 @@ export default {
         user: {},
         user_id: '',
         viewer_num: ''
+      },
+      follow:{
+        user_id:'',
+        followed_userid:''
       }
     }
   },
@@ -130,21 +135,28 @@ export default {
           this.SHOW_ALERT(error.response.data.msg)
         })
     },
-//   computed: {
-//     ...mapGetters(['user']),
-//     ...mapGetters(['img'])
-// },
+    addwatch(){
+      this.follow.user_id = this.user.user_id
+      this.follow.followed_userid=this.img.user_id
+      addwatch(this.follow).then(response => {
+        this.$notify.success({
+            title: '成功',
+            message: '关注成功！'
+          })
+      })
+
+    },
+  
 },
+computed: {
+    ...mapGetters(['user']),
+    },
   created: function() {
     const id = this.$route.params.id
     this.getOne(id)
 
 },
 
-
-  // computed: {
-  //   ...mapGetters(['imgs'])
-  //   },
 
 }
 </script>

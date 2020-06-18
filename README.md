@@ -7,7 +7,7 @@
 
 * 概要：提供动态权限控制、api自动注入、前端路由动态生成的管理平台
 
-* [文档](https://gitee.com/zhuyunlong2018/TVcms/wikis/pages)（有空会陆续更新）
+* [文档]()（有空会陆续更新）
 
  
 
@@ -15,8 +15,6 @@
 
 说明：演示只是最为基础版本、且存在异常和bug，有兴趣最好可以直接clone到本地部署查看
 
-* [admin](http://zhuzu.top/admin)
-* [blog](http://zhuzu.top)
 
 
 ## 项目代码
@@ -46,7 +44,7 @@
 
     打开命令行，输入以下命令
     ```bash
-    git clone https://gitee.com/zhuyunlong2018/TVcms.git
+    git clone https://github.com/lilei132/img.git
     cd TVcms
     ```
     
