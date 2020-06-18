@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="24">
-    <el-col :span="16">
-  <div class="main f-l">
+    <el-col :span="18">
+  <div class="main">
     <article class="clearfix" v-for="item in articleList.data" :key="item.a_id">
 <!--       <div class="pic f-l t-c">
         <a href="javascript:;">
@@ -74,9 +74,7 @@
     </div>
   </div>
 </el-col>
-<el-col style="float:right" class="contain">
-<AsideBar></AsideBar>
-<el-button type="danger" plain style="position:absolute;right:35px;top:310px" @click="uploadArtcile()">发布文章或需求</el-button>
+<el-button type="danger" plain style="position:absolute;right:35px;top:30px" @click="uploadArtcile()">发布文章或需求</el-button>
 </el-col>
 </el-row>
 

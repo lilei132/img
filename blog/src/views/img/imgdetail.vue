@@ -1,16 +1,16 @@
 <template>
   <el-row :gutter="24">
     <el-col :span='20'>
-  <el-card class="main f-l container">
+  <el-card class="main container">
     <el-row > 
-      <el-col :span="2">
-      <div style="margin-top:14px">
+      <el-col :span="3">
+      <div style="margin-top:5px">
                 <el-avatar src="https://photo7n.gracg.com/2001295629_1_7a3569123c04c0d0386862a8e51390cf.jpg!200x200" ></el-avatar>
               </div>
 </el-col>
-<el-col :span="2">
+<el-col :span="3">
   <div style="margin-top:16px"></div>
-  <a style="font-size:18px"> ww </a>
+  <a style="font-size:16px；font-weight:700!important;"> {{img.user.user_name}} </a>
 </el-col>
   <el-col :span="2" :offset="16">
     <div style="margin-top:16px">
@@ -163,16 +163,18 @@ computed: {
 
 <style>
 .container{
-
   margin-left:10%;
   margin-right:10%;
   margin-top:2%;
   margin-bottom:2%;
-
 }
 .content img {width:100%}
 .imgmain{
 
+}
+.el-avatar{
+  width:43px;
+  height:43px;
 }
 body{
   font-family: PingFang SC, Verdana, Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;

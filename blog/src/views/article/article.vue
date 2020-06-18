@@ -1,7 +1,25 @@
 <template>
   <el-row :gutter="10">
-    <el-col :span='16'>
-  <el-card class="main f-l container">
+    <el-col :span='20'>
+  <el-card class="main container">
+        <el-row > 
+      <el-col :span="3">
+      <div style="margin-top:5px">
+                <el-avatar src="https://photo7n.gracg.com/2001295629_1_7a3569123c04c0d0386862a8e51390cf.jpg!200x200" ></el-avatar>
+              </div>
+</el-col>
+<el-col :span="3">
+  <div style="margin-top:16px"></div>
+  <a style="font-size:16px；font-weight:700!important;"> {{article.user.user_name}} </a>
+</el-col>
+  <el-col :span="2" :offset="16">
+    <div style="margin-top:16px">
+    <el-button type="primary" @click="addwatch()">关注</el-button>
+  </div>
+  </el-col>
+    </el-row>
+
+    <el-divider></el-divider>
     <el-row>
     <div class="imgmain">
       <span class="title">{{article.a_title}}</span>
@@ -52,28 +70,7 @@
         <span>累计获得{{article.praise_num}}个赞</span>
       </p>
     </el-row>
-      <comment :articleID="article.a_id"></comment>
-    
   </el-card>
-</el-col>
-<el-col :span="4">
-<el-card>
-        <div class="juzhong font-weight-bold">
-          <el-row>
-          <div style="margin-top:14px">
-                <el-avatar src="https://photo7n.gracg.com/2001295629_1_7a3569123c04c0d0386862a8e51390cf.jpg!200x200" ></el-avatar>
-              </div>
-            </el-row>
-<el-row>
-    <a style="font-size:18px"> {{article.user.user_name}} </a></el-row>
-<el-row style="font-size:18px;padding-top14px;padding-bottom:14px">
-  <span style="color: #999;">人气：</span><span>23</span>
-</el-row>
-<el-row style="padding:7px">
-  <el-button type="primary" @click='addwatch()'>关注</el-button>
-</el-row>
-</div>
-</el-card>
 </el-col>
 
 </el-row>
@@ -177,12 +174,10 @@ export default {
 
 <style>
 .container{
-
   margin-left:10%;
   margin-right:10%;
   margin-top:2%;
   margin-bottom:2%;
-
 }
 .imgmain{
 
@@ -241,8 +236,8 @@ text-align: center;
   width:200px;
 }
 .el-avatar{
-  width:80px;
-  height:80px;
+  width:53px;
+  height:53px;
 }
 .font-weight-bold {
     font-weight: 700 !important;
