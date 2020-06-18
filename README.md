@@ -1,25 +1,15 @@
 # TVcms
 
-一个基于thinkPHP5+Vue2.5的简单cms内容管理程序
+一个基于thinkPHP5+Vue2.5的简单网站程序
 
 
-* 简单说明：本项目由原个人初学时开发博客重构而来，参考项请查看下方致谢
-
-* 概要：提供动态权限控制、api自动注入、前端路由动态生成的管理平台
-
-* [文档]()（有空会陆续更新）
 
  
-
-## 演示
-
-说明：演示只是最为基础版本、且存在异常和bug，有兴趣最好可以直接clone到本地部署查看
 
 
 
 ## 项目代码
 
-* [码云](https://gitee.com/zhuyunlong2018/TVcms)
 * [GitHub](https://github.com/920200256/TVcms)
 
 ## 项目架构
@@ -97,14 +87,6 @@
 
 ## 相关截图
 
-管理总后台（cms)
-![](./doc/pic/show_admin1.png)   
-
-原博客项目前台
-![](./doc/pic/show_blog1.png)   
-
-原博客项目后台
-![](./doc/pic/show_blog2.png)   
 
 ## 致谢
 

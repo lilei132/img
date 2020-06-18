@@ -1,16 +1,6 @@
-# bianquan-blog
+# Image-blog
 
-#dev分支，本项目在重构中……
-
-
-vue.js+php(TP5)博客系统
-
-说明：若在博客提问题，请不要使用测试账号，直接退出登录使用游客评论，填写真实邮箱，或用真实邮箱注册账号回复，方便作者回复邮件通知，也可直接给作者发邮件或在此提出issue。
-
-
->更新记录
-#commits5 之前：后端为原生php；
-#commits6 后端改为thinkPHP5框架
+vue.js+php(TP5)
 
 ## Build Setup
 前端：
@@ -26,7 +16,7 @@ npm run build
 ```
 后端：
 1.  将bianquan.sql导入到mysql数据库中
-2.  默认管理员账号名为admin，邮箱：920@qq.com，密码：123456,修改请到MySQL中修改
+2.  修改请到MySQL中修改
 3.  后台改用thinkPHP5框架，进入servers文件夹，composer install，或者请自行下载tp5的核心文件thinkphp文件夹，放到\bianquan-blog\servers下。
 4.  到\bianquan-blog\servers\application下修改database.php文件的数据库地址、名称和密码为自己的。
 5.  若后端地址为非localhost：80，前台请求地址需相应修改，请到\bianquan-blog\src\vuex下的state.js和actions.js中(共两处URL)修改请求地址URL。
@@ -34,24 +24,13 @@ npm run build
 
 
 **项目简介**：
-> * 名称：边泉博客管理平台；
+> * 名称：图片站；
 > * 前端：Vue+Vuex+Vue-Router+axios；
 > * 后端：PHP+MySQL；
 > * 兼容性：ie9+，移动端，PC端；
 
 **主要功能**：
-> * 用户登录、注册；
-> * 用户评论、游客评论；
-> * 评论回复邮件提醒；
-> * 页面文章标签检索展示；
-> * 页面文章时间轴排序；
-> * 页面项目展示；
-> * 后台文章增加、编辑、删除、下架管理；
-> * 后台评论屏蔽、解封管理；
-> * 后台图片上传、删除功能；
-> * 后台标签新增、删除功能；
-> * 后台友情链接新增、删除功能；
-> * 后台实验室项目新增、下架功能；
+
 
 **目前存在问题**：
 1.  页面响应式布局方面，还有一些元素在特殊窗口尺寸中显示不协调；
@@ -133,21 +112,7 @@ npm run build
 **组件结构图：**
 ![](https://github.com/920200256/bianquan-blog/blob/master/static/imgs/20180405/jiegoutu.jpg)
 **主要页面展示：**
-首页：![](https://github.com/920200256/bianquan-blog/blob/master/static/imgs/20180409/HOME.jpg)
-文章详情：![](https://github.com/920200256/bianquan-blog/blob/master/static/imgs/20180409/article.jpg)
-留言板：![](https://github.com/920200256/bianquan-blog/blob/master/static/imgs/20180409/MESSAGE.jpg)
-实验室：![](https://github.com/920200256/bianquan-blog/blob/master/static/imgs/20180409/PROJECT.jpg)
-时间轴：![](https://github.com/920200256/bianquan-blog/blob/master/static/imgs/20180409/SEARCH.jpg)
-搜索：![](https://github.com/920200256/bianquan-blog/blob/master/static/imgs/20180409/TIMER.jpg)
-网站概要：![](https://github.com/920200256/bianquan-blog/blob/master/static/imgs/20180406/outline.png)
-个人中心：![](https://github.com/920200256/bianquan-blog/blob/master/static/imgs/20180406/user.jpg)
-发布文章：![](https://github.com/920200256/bianquan-blog/blob/master/static/imgs/20180406/write.png)
-编辑文章列表：![](https://github.com/920200256/bianquan-blog/blob/master/static/imgs/20180406/edit.png)
-评论管理：![](https://github.com/920200256/bianquan-blog/blob/master/static/imgs/20180406/comment.png)
-会员管理：![](https://github.com/920200256/bianquan-blog/blob/master/static/imgs/20180406/member.png)
-图片管理：![](https://github.com/920200256/bianquan-blog/blob/master/static/imgs/20180406/imgs.png)
-其他设置：![](https://github.com/920200256/bianquan-blog/blob/master/static/imgs/20180406/otherseting.png)
-实验室管理：![](https://github.com/920200256/bianquan-blog/blob/master/static/imgs/20180406/lab.png)
+
 
 
 **引用：**

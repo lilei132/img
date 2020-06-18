@@ -86,12 +86,12 @@ export default {
         a_title: '',
         outline: '',
         tag: {
-          tag_id: 1,
-          tag_name: '漫坛闲话',
+          tag_id: 3,
+          tag_name: '漫坛闲聊',
           create_time: '1970-01-01 08:00:00'
         },
         images: [],
-        tag_id: 1,
+        tag_id: 3,
         user_id: 0,
       },
       create: true,
@@ -136,7 +136,7 @@ export default {
       this.article.imgs = this.savedImgs
       this.article.id=this.user.user_id
       addArticle(this.article).then(response => {
-        this.$router.push('/admin/editor')
+        this.$router.push('/articleList')
       })
     },
     updateArticle() {
