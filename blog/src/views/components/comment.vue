@@ -284,11 +284,9 @@ export default {
   .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
   background: rgba(250, 250, 250, 0);
 }
-
 .main .CodeMirror {
   background: rgba(250, 250, 250, 0);
 }
-
 @media only screen and (max-width: 500px) {
   .commentBox .notice {
     float: none;

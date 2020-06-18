@@ -3,14 +3,22 @@
     <div class="write">
       <div class="center clearfix">
         <div class="title-top">
+        <el-row >
+        <el-image
+      style="width: 100%; height: 100%"
+      :src="src"
+      ></el-image>
+
+      </el-row>
+<el-row class="sidepadding">
           <input
             class="form-control title"
             type="text"
             name="title"
             v-model="article.a_title"
-            placeholder="标题"
+            placeholder="图片标题"
           >
-          <div class="c-dropdown">
+          <div class="c-dropdown" style="margin-left:2%">
             <span class="c-button c-button-dropdown" @click="showTags">{{article.tag.tag_name}}</span>
             <transition name="show-tags">
               <ul class="c-dropdown__list" v-show="tags_box">
@@ -24,15 +32,17 @@
               </ul>
             </transition>
           </div>
+        </el-row>
         </div>
-        <div class="markdown f-l editor">
+
+        <div class="markdown f-l editor sidepadding">
           <div>
             <textarea
               class="outline"
               v-model="article.outline"
               cols="70"
               rows="3"
-              placeholder="文章概要（请控制在100字左右）"
+              placeholder="图像简介（100字内）"
             ></textarea>
           </div>
           <markdown-editor
@@ -43,12 +53,13 @@
             preview-class="markdown-body"
           ></markdown-editor>
         </div>
-        <div class="file f-r">
+      </div>
+        <el-row class="sidepadding2">
           <div class="imgBox">
             <div class="imgContainer background-box">
               <img v-show="article.a_img" :src="article.a_img">
               <p v-show="!article.a_img" class="background-notice">暂无封面</p>
-              <p>文章封面</p>
+              <p>图片组封面</p>
             </div>
           </div>
           <div class="inputBox">
@@ -76,10 +87,11 @@
               <p @click="addImgArticle(img)">加入正文</p>
             </div>
           </div>
-        </div>
-      </div>
-      <button type="button" class="btn btn-success" v-if="create" @click="addArticle">发布文章</button>
-      <button type="button" class="btn btn-danger" v-if="!(create)" @click="updateArticle">更新文章</button>
+        </el-row>
+      <el-row class="sidepadding" style="margin-left:18%">
+      <button type="button" class="btn btn-success" v-if="create" @click="addArticle">发布</button>
+      <button type="button" class="btn btn-danger" v-if="!(create)" @click="updateArticle">更新</button>
+    </el-row>
     </div>
   </div>
 </template>
@@ -93,6 +105,7 @@ import { upBase64 } from '@/api/file'
 export default {
   data() {
     return {
+      src:"https://photo7n.gracg.com/1540168448_0_dfebed584cdb2c2c810180cca9e6c3fa.jpg",
       article: {
         a_content: '',
         a_id: 0,
@@ -106,7 +119,7 @@ export default {
         },
         images: [],
         tag_id: 1,
-        user_id: 0
+        user_id: 0,
       },
       create: true,
       tags: [],
@@ -148,6 +161,7 @@ export default {
     },
     addArticle() {
       this.article.imgs = this.savedImgs
+      this.article.id=this.user.user_id
       addArticle(this.article).then(response => {
         this.$router.push('/admin/editor')
       })
@@ -213,7 +227,8 @@ export default {
       }
       const data = {
         imgs: this.images,
-        path: 'article'
+        path: 'article',
+        id: this.user.user_id
       }
       upBase64(data).then(response => {
         const data = response.data.data
@@ -297,7 +312,13 @@ export default {
 .outline {
   width: 100%;
 }
-
+.f-b{
+  width:100%;
+  border:1px;
+  padding:20px;
+  margin-top:10;
+  margin-left:20px;
+}
 .inputBox {
   width: 100%;
   height: 40px;
@@ -486,7 +507,24 @@ export default {
   border: 5px solid transparent;
   border-top-color: #e6e9ed;
 }
-
+.sidepadding{
+padding-left:15%;
+padding-right:15%;
+padding-top:12px;
+padding-bottom:12px;
+}
+.sidepadding2{
+padding-left:15%;
+padding-right:40%;
+padding-top:12px;
+padding-bottom:12px;
+}
+.mainpadding{
+border:solid 1px #636060;
+padding:42px;
+margin-top:42px;
+margin-bottom:42px;
+}
 .show-tags-enter-active {
   animation: bounce-in 0.5s;
 }
@@ -530,4 +568,3 @@ export default {
     margin-top: 10px;
   }
 }
-</style>

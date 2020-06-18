@@ -1,7 +1,7 @@
 <template>
   <div class="admin-aside" :class="_TOOGLE_SIDEBAR" @click="CLOSE_LOGOUT_BOX">
     <ul class="sidebar-menu">
-      <li class="header">欢迎使用边泉博客管理平台</li>
+      <li class="header">欢迎使用 </li>
       <li>
         <router-link to="/admin/outline">
           <i class="glyphicon glyphicon-th-list"></i>

@@ -18,7 +18,7 @@ use app\lib\exception\ParameterException;
 use app\lib\exception\RepeatException;
 use app\lib\exception\ResourcesException;
 use app\lib\Response;
-
+use app\lib\exception\LoginException;
 class User extends BaseController
 {
     /**
@@ -87,5 +87,44 @@ class User extends BaseController
         $user->save();
         return new Response();
     }
+    /**
+     * @Api(修改用户名字,4,POST)
+     */
+
+    public function changeName($id,$name) {
+        $user = UserModel::get($id);
+        if(empty($user)) {
+            throw new ResourcesException();
+        }
+        $user->user_name = $name;
+        $user->save();
+        return new Response();
+    }
+
+
+    public function changeDetail($id,$address,$gender) {
+        $user = UserModel::get($id);
+        if(empty($user)) {
+            throw new ResourcesException();
+        }
+        $user->user_address = $address;
+        $user->gender = $gender;
+        $user->save();
+        return new Response();
+    }
+    public function changePassword($id,$password,$newpassword) {
+        $user = UserModel::get($id);
+        if(!UserService::checkPassword($user,$password)) {
+            throw new LoginException(['msg'=>'密码错误','errorCode'=>10002]);
+        } 
+        $passwordSalt = getRandChar(32);
+        $password2 = UserService::generatePassword($newpassword,$passwordSalt);
+        $user->user_pwd = $password2;
+        $user->user_pwd_salt =$passwordSalt;
+        $user->save();
+        return new Response();
+    }
+    
+
 
 }

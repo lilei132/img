@@ -9,16 +9,18 @@
 
 namespace app\admin\service;
 use app\admin\model\Images as ImagesModel;
+use app\admin\model\User as UserModel;
 use app\admin\model\ImagesSource;
 
 class Images
 {
-    public static function addImages($images,$tableID,$tableName) {
+    public static function addImages($images,$tableID,$tableName,$id) {
         if(empty($images)) {
             return false;
         }
         $data = [];
-        $user = User::init();
+        //$user = User::init();
+        $user = UserModel::get($id);
         $path = myConfig('path.'.$tableName,$user['user_id']);
         foreach ($images as $img) {
             $data[] = [

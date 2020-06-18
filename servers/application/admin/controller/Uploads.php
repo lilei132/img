@@ -10,6 +10,7 @@ namespace app\admin\controller;
 
 
 use app\admin\service\User;
+use app\admin\model\User as UserModel;
 use app\lib\exception\ParameterException;
 use app\lib\Protect;
 use app\lib\Redis;
@@ -54,11 +55,13 @@ class Uploads extends BaseController
         return new Response(['msg'=>'上传成功，请在10分钟内绑定图片，过期将删除','data'=>$data]);
     }
 
-    public function determineBase64($imgs,$path) {
+    public function determineBase64($imgs,$path,$id) {
         if(!is_array($imgs) || empty($imgs)) {
             throw new ParameterException();
         }
-        $user = User::init();
+        $user = UserModel::get($id);
+        //$user = User::init();
+        //$user_id=
         $file = myConfig('path.'.$path,$user['user_id']);
         if(!$file) {
             throw new ParameterException();

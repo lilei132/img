@@ -13,7 +13,16 @@ import otherSeting from '@/views/components/other_seting.vue'
 import user from '@/views/components/user.vue'
 import timer from '@/views/components/timer.vue'
 import store from '@/store'
-
+import home from '@/views/home/home.vue'
+import register from '@/views/register.vue'
+import mylogin from '@/views/mylogin.vue'
+import usercenter from '@/views/user/usercenter.vue'
+import uploadimg from '@/views/user/uploadimg.vue'
+import imgupload from '@/views/components/imgupload.vue'
+import imgList from '@/views/img/imgList.vue'
+import img from '@/views/img/imgdetail.vue'
+import userside from '@/views/components/userside.vue'
+import writearticle from '@/views/components/writearticle.vue'
 Vue.use(Router)
 
 const routes = [
@@ -23,7 +32,7 @@ const routes = [
     children: [
       {
         path: '/',
-        name: 'home',
+        name: 'home1',
         redirect: '/articleList'
       },
       {
@@ -32,14 +41,64 @@ const routes = [
         component: aboutPage
       },
       {
+            path : 'home', 
+            name:'home',
+            component : home
+        },
+        {
+            path : '/register', 
+            name:'register',
+            component : register
+        },
+        {
+            path : '/mylogin', 
+            name:'mylogin',
+            component : mylogin
+        },
+        {
+            path : '/usercenter', 
+            name:'usercenter',
+            component : usercenter
+        },
+            {
+            path : '/uploadimg', 
+            name:'uploadimg',
+            component : uploadimg
+        },
+        {
         path: 'articleList',
         name: 'articleList',
         component: articleList
       },
       {
+        path: 'imgupload',
+        name: 'imgupload',
+        component: imgupload
+      },
+      {
+        path: 'imgList',
+        name: 'imgList',
+        component: imgList
+      },
+        {
+        path: 'imgList/img/:id',
+        name: 'img',
+        component: img
+      },
+      {
+        path: 'userside',
+        name: 'userside',
+        component: userside
+      },
+      {
         path: 'articleList/article/:id',
         name: 'article',
         component: article
+      },
+      {
+        path: 'writearticle',
+        name: 'writearticle',
+        component: writearticle
       },
       {
         path: 'timer',

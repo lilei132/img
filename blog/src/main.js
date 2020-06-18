@@ -6,7 +6,10 @@ import 'babel-polyfill'
 import VueSimplemde from 'vue-simplemde'
 import './assets/styles/main.css'
 import './assets/styles/normalize.css'
-Vue.use(VueSimplemde)
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css';
+import Navi from './views/layout/header.vue'
+Vue.use(ElementUI)
 Vue.config.debug = true
 /* eslint-disable no-new */
 new Vue({
@@ -15,3 +18,4 @@ new Vue({
   store,
   render: h => h(App)
 })
+

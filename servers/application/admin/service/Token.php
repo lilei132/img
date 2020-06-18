@@ -55,7 +55,9 @@ class Token
         ];
         self::$token = JWT::encode($tokenMsg, config('token.key'));
         self::$tokenKey = 'token:'.md5(self::$token);
-        Redis::init()->hmset(self::$tokenKey,$user);
+        
+        Redis::init()->hmset(self::$tokenKey, ['user' => $user['user_id']]);
+        //Redis::init()->hmset(self::$tokenKey,$user);
         Redis::init()->expire(self::$tokenKey,config('token.exp'));
         return self::$token;
     }

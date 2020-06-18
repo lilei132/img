@@ -36,7 +36,7 @@ class ActionInfo
 
     public static function init($class,$action,$path) {
         if(!self::$ref) {
-            self::$ref = new ReflectionMethod($class, $action);
+            self::$ref = new ReflectionMethod(str_replace('/','\\',$class), $action);
             self::$params = json_encode(self::$ref->getParameters());
         }
         if(!self::$path) {

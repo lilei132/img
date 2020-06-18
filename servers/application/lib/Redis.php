@@ -128,7 +128,7 @@ class Redis
     {
         self::init();
         if(is_array($value)) {
-            return self::$redis->sadd($key,...$value);
+            return self::$redis->sadd($key,$value);
         } else {
             return self::$redis->sadd($key,$value);
         }

@@ -18,11 +18,11 @@ use app\lib\Redis;
 class User
 {
     protected static $user = null;
-
     public static function init() {
         if(!self::$user) {
             $tokenKey = Token::init();
-            self::$user = Redis::hGetAll($tokenKey);
+            $userId= Redis::get($tokenKey);
+            self::$user = UserModel::find($userId);
             if(!self::$user) {
                 throw new TokenException();
             }

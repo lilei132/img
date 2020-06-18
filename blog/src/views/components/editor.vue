@@ -14,7 +14,7 @@
         <tbody>
           <tr v-for="article in list" :key="article.a_id">
             <td width="5%">{{article.a_id}}</td>
-            <td>{{article.a_title}}</td>
+            <td @click="showArticle(article.a_id)">{{article.a_title}}</td>
             <td width="15%">{{article.create_time}}</td>
             <td width="10%">
               <label class="el-switch">
@@ -28,7 +28,7 @@
               </label>
             </td>
             <td width="15%">
-              <i class="edit glyphicon glyphicon-edit" @click="getOneArticle(article.a_id)"></i>
+<!--               <i class="edit glyphicon glyphicon-edit" @click="getOneArticle(article.a_id)"></i> -->
               <i class="delete glyphicon glyphicon-trash" @click="confirmDel(article.a_id)"></i>
             </td>
           </tr>

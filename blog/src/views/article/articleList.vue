@@ -1,38 +1,47 @@
 <template>
+  <el-row :gutter="24">
+    <el-col :span="16">
   <div class="main f-l">
     <article class="clearfix" v-for="item in articleList.data" :key="item.a_id">
-      <div class="pic f-l t-c">
+<!--       <div class="pic f-l t-c">
         <a href="javascript:;">
           <img :src="item.a_img" alt>
         </a>
-      </div>
-      <div class="content f-l">
-        <a @click="showArticle(item.a_id)" href="javascript:scroll(0,0)">
+      </div> -->
+      <div class="content">
+        <el-row :gutter="20">
+          <el-col :span="16">
+            <div style="padding:10px">
+          <a @click="showArticle(item.a_id)" href="javascript:scroll(0,0)">
           <h3 class="title">{{item.a_title}}</h3>
         </a>
         <p class="summary" v-html="item.outline"></p>
-        <ul class="tag">
-          <li @click="getListByTag(item.tag_id,item.tag.tag_name)">
-            <i class="glyphicon glyphicon-tag"></i>
-            {{item.tag.tag_name}}
-          </li>
-          <li>
-            <i class="glyphicon glyphicon-pencil"></i>
+        </div>
+          </el-col>
+          <el-col :span="8">
+            <el-row class="tag">
+          <el-col class="icon" >
+            <a @click="getListByTag(item.tag_id,item.tag.tag_name)">
+            <i class="el-icon-price-tag"></i>
+            {{item.tag.tag_name}}</a>
+          </el-col>
+          <el-col class="icon">
+            <i class="el-icon-user"></i>
             {{item.user.user_name}}
-          </li>
-          <li>
-            <i class="glyphicon glyphicon-calendar"></i>
+          </el-col>
+          <el-col class="icon">
+            <i class="el-icon-timer"></i>
             {{item.create_time}}
-          </li>
-          <li>
-            <i class="glyphicon glyphicon-comment"></i>
+          </el-col>
+          <el-col class="icon">
+            <i class="el-icon-chat-dot-square"></i>
             {{item.comment_num}}
-          </li>
-          <li>
-            <i class="glyphicon glyphicon glyphicon-heart"></i>
-            {{item.praise_num}}
-          </li>
-        </ul>
+          </el-col>
+        </el-row>
+          </el-col>
+        </el-row>
+
+
       </div>
     </article>
 
@@ -64,10 +73,18 @@
       </ul>
     </div>
   </div>
+</el-col>
+<el-col style="float:right" class="contain">
+<AsideBar></AsideBar>
+<el-button type="danger" plain style="position:absolute;right:35px;top:310px" @click="uploadArtcile()">发布文章或需求</el-button>
+</el-col>
+</el-row>
+
 </template>
 
 <script>
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
+import AsideBar from '@/views/layout/aside.vue'
 export default {
   name: 'ArticleList',
   data() {
@@ -76,6 +93,7 @@ export default {
   methods: {
     ...mapActions(['getArticleList']),
     ...mapMutations(['SET_ARTICLE_LIST_INFO', 'CHANGE_CRUMBS']),
+    //翻页
     changePage(page) {
       if (page <= 0 || page > this.articleList.last_page) {
         return
@@ -86,6 +104,7 @@ export default {
       this.$store.commit('SET_ARTICLE_LIST_INFO', obj)
       this.getArticleList()
     },
+    //通过类别来获取列表
     getListByTag(tagID, tagName) {
       const listObj = {
         page: 1,
@@ -100,11 +119,18 @@ export default {
       }
       this.CHANGE_CRUMBS(obj)
     },
+    //文章详情页
     showArticle(id) {
       this.$router.push({
         name: 'article', params: { id }
       })
     },
+    uploadArtcile(){
+      this.$router.push({
+        name: 'writearticle', 
+    })
+    },
+    //范围，下一页
     range: function(k) {
       let pageStart
       let pageEnd
@@ -142,7 +168,9 @@ export default {
   created: function() {
     this.getArticleList()
   },
-  components: {}
+  components: {
+    AsideBar
+  }
 }
 </script>
 
@@ -155,27 +183,10 @@ export default {
   box-shadow: 3px 3px 8px 2px #ccc;
 }
 
-.main article .pic {
-  width: 26%;
-  height: 140px;
-  margin: 20px;
-  overflow: hidden;
-}
-.main article .pic a img {
-  width: 100%;
-  height: auto;
-  transition: all 0.3s linear;
-  -webkit-transition: all 0.3s linear;
-}
 
-.main article:hover .pic a img {
-  transform: scale(1.05);
-  -webkit-transform: scale(1.1);
-}
 
 .main article .content {
-  width: 64%;
-  height: 140px;
+  width: 100%;
 }
 .main article .content a {
   text-decoration: none;
@@ -216,7 +227,10 @@ export default {
 .main article .content .tag li i {
   margin-right: 5px;
 }
+.icon{
+  padding:7px;
 
+}
 main .page ul {
   margin: 20px;
 }

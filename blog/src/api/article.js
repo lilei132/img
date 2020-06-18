@@ -55,7 +55,27 @@ export function addArticle(data) {
     data
   })
 }
-
+export function addImg(data) {
+  return request({
+    url: '/blog/Imgupload/addImg',
+    method: 'post',
+    data
+  })
+}
+export function addwatch(data) {
+  return request({
+    url: '/blog/Follow/addwatch',
+    method: 'post',
+    data
+  })
+}
+export function getauthor(data) {
+  return request({
+    url: '/blog/Follow/getauthor',
+    method: 'post',
+    data
+  })
+}
 export function updateArticle(data) {
   return request({
     url: '/blog/article/update',

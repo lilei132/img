@@ -1,50 +1,95 @@
 <template>
-  <div class="main f-l">
-    <div class="article">
-      <h3 class="title">{{ article.a_title }}</h3>
-      <ul class="tag">
-        <li>
-          <i class="glyphicon glyphicon-tag"></i>
-          {{article.tag.tag_name}}
-        </li>
-        <li>
-          <i class="glyphicon glyphicon-pencil"></i>
-          {{article.user.user_name}}
-        </li>
-        <li>
-          <i class="glyphicon glyphicon-calendar"></i>
-          {{article.create_time}}
-        </li>
-        <li>
-          <i class="glyphicon glyphicon-comment"></i>
-          {{article.comment_num}}
-        </li>
-        <li>
-          <i class="glyphicon glyphicon glyphicon-heart"></i>
-          {{article.praise_num}}
-        </li>
-      </ul>
-      <div class="content" v-html="article.a_content"></div>
+  <el-row :gutter="10">
+    <el-col :span='16'>
+  <el-card class="main f-l container">
+    <el-row>
+    <div class="imgmain">
+      <span class="title">{{article.a_title}}</span>
+    </div> 
+  </el-row>
+  <el-row class="create_time">
+    发布于{{article.create_time}}
+  </el-row>
+  <el-row>
+    <div class="bottom clearfix" style="padding:5px ">
+            <i class="el-icon-view font-12" style="margin-right: 1rem !important;">7923</i>
+            <i class="el-icon-chat-line-round font-12" style="margin-right: 1rem !important;" >{{article.comment_num}}</i>
+            <i class="el-icon-star-off font-12" style="margin-right: 1rem !important;" >{{article.praise_num}}</i>
+          </div>
+
+  </el-row>
+  <el-row :gutter="24">
+    <el-col :span="3">
+      <div><img style="width: 30px;flex-shrink: 0;" src="../../assets/imgs/work_hot.png" alt=""></div>
+        <span class="font-12" style="font">热门</span>
+    </el-col>
+    <el-col  :span="3">
+      <div><img style="width: 30px;flex-shrink: 0;" src="../../assets/imgs/work_tuijian.png" alt=""></div>
+        <span class="font-12" style="font">推荐</span>
+    </el-col>
+
+  </el-row>
+     <el-divider></el-divider>
+     <el-row>
+       “{{article.outline}}”
+     </el-row>
+<el-row class="top">
+  <i class="el-icon-price-tag"></i>
+
+  <el-tag type="info">{{article.tag.tag_name}}</el-tag>
+</el-row>
+<el-row>
+  <i class="el-icon-apple" style="font-size:18px;"></i>
+</el-row>
+<el-row>
+      <div class="content" style="text-align: center;" v-html="article.a_content"></div>
+    </el-row>
+    <el-row>
       <p class="praise">
         <i class="glyphicon glyphicon-thumbs-up" @click="addArticlePraise(article.a_id)"></i>
       </p>
       <p class="praise">
         <span>累计获得{{article.praise_num}}个赞</span>
       </p>
+    </el-row>
       <comment :articleID="article.a_id"></comment>
-    </div>
-  </div>
+    
+  </el-card>
+</el-col>
+<el-col :span="4">
+<el-card>
+        <div class="juzhong font-weight-bold">
+          <el-row>
+          <div style="margin-top:14px">
+                <el-avatar src="https://photo7n.gracg.com/2001295629_1_7a3569123c04c0d0386862a8e51390cf.jpg!200x200" ></el-avatar>
+              </div>
+            </el-row>
+<el-row>
+    <a style="font-size:18px"> {{article.user.user_name}} </a></el-row>
+<el-row style="font-size:18px;padding-top14px;padding-bottom:14px">
+  <span style="color: #999;">人气：</span><span>23</span>
+</el-row>
+<el-row style="padding:7px">
+  <el-button type="primary" @click='addwatch()'>关注</el-button>
+</el-row>
+</div>
+</el-card>
+</el-col>
+
+</el-row>
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions, mapMutations,mapGetters } from 'vuex'
 import comment from '@/views/components/comment.vue'
-import { getOne } from '@/api/article'
+import { getOne,addwatch,getauthor } from '@/api/article'
 import simplemde from 'simplemde'
+import AsideBar from '@/views/layout/aside.vue'
 export default {
   data() {
     return {
       article: {
+
         a_content: '',
         a_id: '',
         a_img: '',
@@ -60,11 +105,17 @@ export default {
         user: {},
         user_id: '',
         viewer_num: ''
+      },
+      follow:{
+        user_id:'',
+        followed_userid:''
       }
+
     }
   },
   components: {
-    comment
+    comment,
+    AsideBar
   },
   methods: {
     ...mapActions(['getComment', 'addPraise']),
@@ -86,121 +137,114 @@ export default {
           this.SHOW_ALERT(error.response.data.msg)
         })
     },
+
     addArticlePraise(id) {
       this.addPraise(id).then(() => {
         this.article.praise_num++
       })
+    },
+    addwatch(){
+      this.follow.user_id = this.user.user_id
+      this.follow.followed_userid=this.article.user_id
+      addwatch(this.follow).then(response => {
+        this.$notify.success({
+            title: '成功',
+            message: '关注成功！'
+          })
+      })
+
     }
   },
+  computed: {
+    ...mapGetters(['user']),
+},
   created: function() {
     const id = this.$route.params.id
     this.getOne(id)
-  }
+  },
+  // mounted: function() {
+  // const id2='42'
+  // getauthor(id2)
+  // }
+  // mounted:{
+  //   const authorid=this.article.user_id
+  //   this.getauthor(authorid)
+  // }
 }
 </script>
 
+</script>
+
 <style>
-.main .article .content h1 {
-  font-size: 30px;
+.container{
+
+  margin-left:10%;
+  margin-right:10%;
+  margin-top:2%;
+  margin-bottom:2%;
+
 }
-.main .article .content p img {
-  max-width: 100%;
+.imgmain{
+
 }
-.main .comment .commentBox .markdown-editor .CodeMirror,
-.main .comment .commentBox .markdown-editor .CodeMirror-scroll {
-  min-height: 100px;
+body{
+  font-family: PingFang SC, Verdana, Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
 }
-.article .praise {
+.title{
+  font-size:24px;
+  font-weight:700!important;
+}
+.create_time{
+  color:#999;
+  font-size:13px;
+}
+.top{
+  margin-top:21px;
+}
+.like :before{
+  color:#999
+}
+.like :after{
+  color:#0000
+}
+
+.glyphicon glyphicon-thumbs-up{
+   width: 36px !important; 
+    height: 36px !important; 
+}
+.praise {
   text-align: center;
   margin-top: 10px;
   height: 40px;
   line-height: 40px;
 }
-.article .praise span {
+.praise span {
   display: inline-block;
 }
-.article .praise i {
+.praise i {
   cursor: pointer;
   color: #ec919d;
   font-size: 40px;
 }
 
-.article .praise i:hover {
+.praise i:hover {
   font-size: 50px;
   color: #ec5057;
   transition: 0.6s all;
 }
-</style>
-
-<style scoped>
-/*@import '~simplemde/dist/simplemde.min.css';*/
-.main .article {
-  width: 100%;
-  margin: 15px 0;
-  padding: 15px 0;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 3px 3px 8px 2px #ccc;
+.juzhong{
+text-align: center;
 }
-
-.main .article .title {
-  color: rgba(33, 33, 33, 0.8);
-  cursor: pointer;
-  max-height: 60px;
-  overflow: hidden;
-  line-height: 30px;
-  margin: 0 20px;
-  text-shadow: 3px 3px 2px #ccc;
+.contain{
+  padding-top:21px;
+  padding-bottom:21px;
+  width:200px;
 }
-
-.main .article .title:hover {
-  color: #000;
+.el-avatar{
+  width:80px;
+  height:80px;
 }
-
-.main .article .tag {
-  height: 30px;
-  line-height: 30px;
-  border-bottom: 1px solid #ccc;
-  width: 90%;
-  padding: 0 15px;
-  margin: auto;
-  margin-bottom: 20px;
-}
-.main .article .tag li {
-  display: inline-block;
-  padding: 0 8px;
-}
-.main .article .tag li i {
-  margin-right: 5px;
-}
-
-.main .article .content {
-  margin: 0 20px;
-}
-
-@media only screen and (max-width: 600px) {
-  .main .article .title {
-    box-shadow: none;
-    font-size: 18px;
-    margin-top: 0;
-    margin-bottom: 0;
+.font-weight-bold {
+    font-weight: 700 !important;
   }
-
-  .main .article .tag {
-    margin-top: 10px;
-    height: 60px;
-    padding: 0;
-  }
-  .main .article .tag li {
-    float: left;
-    width: 50%;
-  }
-  .main .article .tag li:nth-child(4),
-  .main .article .tag li:nth-child(5) {
-    width: 25%;
-  }
-  .main .article .tag li i {
-    margin-right: 2px;
-  }
-}
 </style>

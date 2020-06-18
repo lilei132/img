@@ -3,39 +3,13 @@
       <nav-header></nav-header>
       <!--登录页面-->
       <log-in></log-in>
-      <!-- 背景图 -->
-      <div class="bg-pic">
-        <img src="../../assets/imgs/nav.jpg" alt="">
-      </div>
-       <!-- 面包屑导航 -->
-      <div class="crumbs">
-        <ul class="top-nav">
-        <li @click="goHome" >
-          <i class="glyphicon glyphicon-home" ></i>
-          <span>首页</span>
-        </li>
-        <li v-show="_crumbs" @click="getListByTag" >
-          <i class="glyphicon glyphicon-menu-right" ></i>
-          <span>{{_crumbs}}</span>
-        </li>
-        <li v-show="crumbs.title" >
-          <i class="glyphicon glyphicon-menu-right" ></i>
-          <span>{{crumbs.title}}</span>
-        </li>
-      </ul>
-      </div>
       <!-- 内容区域 -->
     <main class="center-block clearfix">
-      <router-view></router-view>
 
-        <!-- 侧边区域 -->
-      <aside-bar></aside-bar>
+      <router-view></router-view></el-col>
+
       </main>
 
-    <div class="return-top t-c"><a href="javascript:scroll(0,0)"> <i class="glyphicon glyphicon-circle-arrow-up" ></i> </a></div>
-    <div class="show-nav-btn" @click="showNav"  >
-        <i class="glyphicon" :class="change_color" ></i>
-    </div>
     <nav-footer></nav-footer>
 
   </div>
@@ -97,7 +71,7 @@ export default {
       }
     },
     goHome: function() {
-      if (this.$route.name === 'articleList') {
+      if (this.$route.name === 'imgList') {
         const listObj = {
           page: 1,
           tagID: ''

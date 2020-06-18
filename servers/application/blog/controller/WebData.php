@@ -14,6 +14,7 @@ use app\common\controller\BaseController;
 use app\lib\exception\RepeatException;
 use app\lib\Response;
 use app\blog\model\Article;
+use app\blog\model\Imgupload;
 use think\Cache;
 use think\Request;
 
@@ -34,6 +35,13 @@ class WebData extends BaseController
         }
         $data = WebDataModel::get(1);
         $data->setInc('praise_num');
+        return new Response();
+    }
+    public function addimgPraise($id) {
+        if($id !=0) {
+            $img = Imgupload::get($id);
+            $img->setInc('praise_num');
+        }
         return new Response();
     }
 }

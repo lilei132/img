@@ -7,6 +7,7 @@ import user from './modules/user'
 import loginBox from './modules/loginBox'
 import article from './modules/article'
 import getters from './getters'
+import img from './modules/img'
 
 Vue.use(Vuex)
 
@@ -14,7 +15,8 @@ export default new Vuex.Store({
   modules: {
     user,
     loginBox,
-    article
+    article,
+    img
   },
   state,
   actions,

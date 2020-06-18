@@ -10,6 +10,7 @@
 namespace app\blog\controller;
 use app\admin\service\Images;
 use app\admin\service\User;
+use app\admin\model\User as UserModel;
 use app\admin\model\ImagesSource;
 use app\blog\service\Article as ArticleService;
 use app\common\controller\BaseController;
@@ -51,11 +52,12 @@ class Article extends BaseController
         return new Response(['data'=>$articles]);
     }
 
-    public function getTitleList() {
-        $user = User::init();
+    public function getTitleList($id) {
+        //$user = User::init();
+        $user = UserModel::get($id);
         $condition = [
             'user_id' => $user['user_id'],
-            'status' => 1
+            'status' => 0   
         ];
         $field = 'a_id,a_title,published,create_time';
         $list = ArticleModel::getTitleList($condition,$field);
@@ -100,28 +102,29 @@ class Article extends BaseController
         if(empty($article)) {
             throw new ResourcesException();
         }
-        $user = User::init();
-        if($article->user_id != $user['user_id']) {
-            throw new AuthException();
-        }
+        // $user = User::init();
+        // if($article->user_id != $user['user_id']) {
+        //     throw new AuthException();
+        // }
         $article->delete();
         return new Response();
     }
 
-    public function add($a_title,$outline='',$a_content,$a_img=0,$tag_id,$imgs=[]) {
-        $user = User::init();
+    public function add($a_title,$outline='',$a_content,$tag_id,$imgs=[],$id) {
+        //$user = User::init();
+        $user = UserModel::get($id);
         $article = ArticleModel::create([
             'a_title' =>$a_title,
             'a_content' =>$a_content,
             'outline' => $outline,
-            'a_img' => $a_img,
+            //'a_img' => $a_img,
             'tag_id' => $tag_id,
             'user_id' =>$user['user_id']
         ]);
         if(!$article) {
             throw new ResourcesException();
         }
-        Images::addImages($imgs,$article->a_id,'article');
+        //Images::addImages($imgs,$article->a_id,'article',$id);
         return new Response();
     }
 
