@@ -143,12 +143,18 @@ export default {
     addwatch(){
       this.follow.user_id = this.user.user_id
       this.follow.followed_userid=this.article.user_id
-      addwatch(this.follow).then(response => {
+      if(this.follow.user_id==this.follow.followed_userid){
+        this.$notify.success({
+            title: '失败',
+            message: '不能关注自己哦'
+          })
+      }
+      else{addwatch(this.follow).then(response => {
         this.$notify.success({
             title: '成功',
             message: '关注成功！'
           })
-      })
+      })}
 
     }
   },

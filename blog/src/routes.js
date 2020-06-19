@@ -23,6 +23,7 @@ import imgList from '@/views/img/imgList.vue'
 import img from '@/views/img/imgdetail.vue'
 import userside from '@/views/components/userside.vue'
 import writearticle from '@/views/components/writearticle.vue'
+import author from '@/views/user/author.vue'
 Vue.use(Router)
 
 const routes = [
@@ -99,6 +100,11 @@ const routes = [
         path: 'writearticle',
         name: 'writearticle',
         component: writearticle
+      },
+      {
+        path: 'author/:id',
+        name: 'author',
+        component: author
       },
       {
         path: 'timer',

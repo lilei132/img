@@ -93,7 +93,7 @@
 				<el-card :body-style="{ padding: '0px' }"  shadow="never" >
 					<el-image :src="img.i_img"></el-image>
 										<div style="padding: 7px;">
-						<span style="font-size:12px" @click="showArticle(img.a_id)">{{img.i_title}}</span>
+						<span style="font-size:12px" @click="showImgDetail(img.a_id)">{{img.i_title}}</span>
 					</div><div class="bottom clearfix" style="padding:5px ">
 						<span style="font-size:12px">创建于：{{img.create_time}}</span>
 					</div>
@@ -242,7 +242,7 @@
     </div>
 </template>
 <script type="text/ecmascript-6">
-import {changeName,changeDetail,changePassword} from '@/api/user'
+import {changeName,changeDetail,changePassword,findFollow} from '@/api/user'
 import { mapMutations, mapGetters } from 'vuex'
 import { getTitleList, changePublish, delArticle } from '@/api/article'
 import {getimgTitleList,delImg} from '@/api/Img'
@@ -306,7 +306,8 @@ export default {
             id2: null,
             published: null,
             list: [],
-            list2: []
+            list2: [],
+            list3:[]
 		}
 		
 	},
@@ -450,6 +451,12 @@ export default {
         }
       })
     },
+
+    findFollowlist(id){
+    	findFollow(id).then(response => {
+        this.list3 = response.data.data
+      })
+		},
     },
 created: function() {
 
@@ -458,6 +465,7 @@ created: function() {
   	const id=this.user.user_id
     this.getList(id)
     this.getimgList(id)
+    this.findFollowlist(id)
 }
 
 }

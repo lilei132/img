@@ -15,5 +15,8 @@ use app\common\model\BaseModel;
 class Follow extends BaseModel
 {
 
+    public static function getTitleList($condition,$field) {
+        return self::where($condition)->field($field)->order('i_id desc')->select();
+    }
 }
 

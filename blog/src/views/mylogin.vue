@@ -61,6 +61,7 @@ export default {
       this.login(this.loginForm)
         .then(() => {
             this.$router.push('/imgList');
+            parent.location.reload();
         })
         .catch()
 },

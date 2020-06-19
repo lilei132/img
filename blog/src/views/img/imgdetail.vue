@@ -10,7 +10,7 @@
 </el-col>
 <el-col :span="3">
   <div style="margin-top:16px"></div>
-  <a style="font-size:16px；font-weight:700!important;"> {{img.user.user_name}} </a>
+  <a style="font-size:16px；font-weight:700!important;" @click="showauthor(img.user.user_id)"> {{img.user.user_name}} </a>
 </el-col>
   <el-col :span="2" :offset="16">
     <div style="margin-top:16px">
@@ -145,6 +145,11 @@ export default {
           })
       })
 
+    },
+    showauthor(id) {
+      this.$router.push({
+        name: 'author', params: { id }
+      })
     },
   
 },

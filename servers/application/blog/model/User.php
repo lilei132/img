@@ -14,5 +14,7 @@ use app\common\model\BaseModel;
 
 class User extends BaseModel
 {
-
+    public static function getfollowList($condition,$field) {
+        return self::where($condition)->field($field)->order('user_id desc')->select();
+}
 }

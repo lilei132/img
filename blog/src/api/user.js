@@ -38,4 +38,10 @@ export function changePassword(data) {
     data
   })
 }
-
+export function findFollow(data) {
+  return request({
+    url: '/blog/Follow/getfollowList',
+    method: 'post',
+    data
+  })
+}
