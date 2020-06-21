@@ -97,19 +97,18 @@
 					</div><div class="bottom clearfix" style="padding:5px ">
 						<span style="font-size:12px">创建于：{{img.create_time}}</span>
 					</div>
-					<i class="delete glyphicon glyphicon-trash" @click="delimg(img.i_id)"></i>
+					<i class="delete glyphicon glyphicon-trash" @click="confirmDel2(img.i_id)"></i>
 				</el-card>
-	<transition name="show-del">
-        <div class="mask" v-if="confirm_del2" @click="confirm_del2=false">
-          <div class="alert" @click="stopProp">
-            <div class="title">确认要删除该文章？</div>
+      <el-dialog :visible.sync="visible"
+        width="30%"
+        style="text-align:center">
+            <div class="title">确认要删除该图组？</div>
             <div class="content">
-              <button type="button" class="btn btn-warning" @click="delArticle2()">确认</button>
-              <button type="button" class="btn btn-info" @click="confirm_del2=false">取消</button>
-            </div>
-          </div>
+              <button type="button" class="btn btn-warning" @click="delimg()">确认</button>
+              <button type="button" class="btn btn-info" @click="visible=false">取消</button>
+
         </div>
-      </transition>
+    </el-dialog>
 
 			</el-col>
   </el-tab-pane>  
@@ -171,17 +170,16 @@
           </tr>
         </tbody>
       </table>
-      <transition name="show-del">
-        <div class="mask" v-if="confirm_del" @click="confirm_del=false">
-          <div class="alert" @click="stopProp">
+      <el-dialog :visible.sync="dialog1"
+  width="30%"
+  style="text-align:center">
             <div class="title">确认要删除该文章？</div>
             <div class="content">
               <button type="button" class="btn btn-warning" @click="delArticle()">确认</button>
-              <button type="button" class="btn btn-info" @click="confirm_del=false">取消</button>
-            </div>
-          </div>
+              <button type="button" class="btn btn-info" @click="dialog1=false">取消</button>
+
         </div>
-      </transition>
+    </el-dialog>
     </div>
   </div>
 
@@ -300,7 +298,7 @@ export default {
 				]
 			},
 			//个人发布文章
-			confirm_del: false,
+			dialog1: false,
 			visible: false,
             id: null,
             id2: null,
@@ -335,8 +333,11 @@ export default {
 			changeName(id).then(()=>{
 				this.$notify.success({
 					title: '成功',
-					message: '更新成功'
-				})
+					message: '更新成功',
+
+
+				});
+				//parent.location.reload();
 			}).catch(response => {
 				this.$notify.error({
 					title: '失败',
@@ -408,11 +409,11 @@ export default {
       })
     },
     confirmDel(id) {
-      this.confirm_del = true
+      this.dialog1 = true
       this.id = id
     },
     delArticle() {
-      this.confirm_del = false
+      this.dialog1 = false
       const data = { id: this.id }
       delArticle(data).then(response => {
         for (const v of this.list) {
@@ -436,11 +437,12 @@ export default {
       })
     },
     confirmDel2(id) {
+      this.visible = true
       this.id2 = id
     },
-    delimg(id) {
-      //this.confirm_del = false
-      const data = { id: id }
+    delimg() {
+      this.visible = false
+      const data = { id: this.id2 }
       delImg(data).then(response => {
         for (const v of this.list2) {
           if (v.i_id === this.id) {
@@ -465,7 +467,7 @@ created: function() {
   	const id=this.user.user_id
     this.getList(id)
     this.getimgList(id)
-    this.findFollowlist(id)
+    //this.findFollowlist(id)
 }
 
 }
