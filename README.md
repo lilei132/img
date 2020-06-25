@@ -83,13 +83,20 @@
 
 
 ## 基础环境配置
-1   安装npm    网站下载就好
-2   安装element   npm i element-ui –S  
-    安装网站介绍(https://element.eleme.cn/#/zh-CN/component/installation)
+*   安装npm    网站下载就好
+*   安装element   
+    ```bash
+     npm i element-ui –S  
+    ```
+*   安装网站介绍(https://element.eleme.cn/#/zh-CN/component/installation)
 
-3   安装vue环境 npm install vue
-4   安排php环境 window phpstudy  mac：MDsever 下载软件集成环境，直接下载安装包
-5   php 启动环境 为 ngix+redis+php+mysql
+*   安装vue环境
+    ```bash
+     npm install vue  
+    ```
+
+*   安排php环境 window phpstudy  mac：MDsever 下载软件集成环境，直接下载安装包
+*   php 启动环境 为 ngix+redis+php+mysql
 
 
 
