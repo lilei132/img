@@ -63,9 +63,9 @@ export function updateArticle(data) {
     data
   })
 }
-export function addimgPraise(data) {
+export function addpageview(data) {
   return request({
-    url: 'blog/Imgupload/addimgPraise',
+    url: '/blog/Imgupload/addpageview',
     method: 'post',
     data
   })

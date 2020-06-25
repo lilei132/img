@@ -1,23 +1,25 @@
 <template>
-    <div>
-<el-tabs :tab-position="tabPosition" type="border-card">
+    <div class="main">
+<el-tabs :tab-position="tabPosition" type="border-card" class="main">
 	<el-tab-pane>
-		<span slot="label"><i class="el-icon-date"></i> 个人信息</span>
+		<span slot="label"></i> 个人信息</span>
 		<div> <el-card class="box-card">
 			<div>
 				<el-row :gutter="20">
 					<el-col :span="6">
 						<div >
 							<el-avatar :src="useravatar"></el-avatar>
+							
+            				<el-button type="info" plain size="mini" @click="avatarchange = true">上传头像</el-button>
 						</div>
 					</el-col>
 					<el-col :span="12">
 						<div>
-							<el-row id='1'>{{ user.user_id }}</el-row>
+							<el-row id='1'>用户ID：{{ user.user_id }}</el-row>
 							<el-row :gutter="20"><el-col :span="6"><span class="text-999">人气:</span>
 								<span class="font-weight-bold">  0</span></el-col>
 								<el-col :span="6"><span class="text-999" style="display:inline;font-size=12px">作品:</span>
-									<a href="#" class="font-weight-bold" style="display:inline">  0</a>
+									<a href="#" class="font-weight-bold" style="display:inline"> 0</a>
 								</el-col>
 								<el-col :span="6"><span class="text-999">关注:</span>
 									<a href="/#" class="font-weight-bold">  0</a></el-col>
@@ -29,11 +31,6 @@
 						</el-row>
 					</div>
 				<el-divider></el-divider>
-						<div>
-							<div 
-							<el-row><div> 账号类型：<span class=" ">普通用户（无法发布作品,申请后获得权限）</span> </div></el-row>
-						</div>
-						<el-divider></el-divider>
 						<div>
 							<el-row>
 								<div> 个人信息：
@@ -83,15 +80,18 @@
 		        <el-divider></el-divider> 				
 						<div>
 							<el-row>
-								<div> 账号类型：<span class=" ">普通用户（or企业用户）</span> </div></el-row>
+								<div> 账号类型：<span v-show="radio==1">普通用户</span> 
+									<span v-show="radio==2">企业用户</span>
+								</div></el-row>
 						</div>
 					</el-card></div>
 				</el-tab-pane>
     <el-tab-pane>
-    <span slot="label"><i class="el-icon-date"></i> 个人作品</span>
+    <span slot="label"> 个人作品</span>
+           <p v-if="list2===null">暂无！</p>
 			<el-col :span="6" v-for="img in list2" :key="img.a_id" class="imgcard" style="padding:7px">
 				<el-card :body-style="{ padding: '0px' }"  shadow="never" >
-					<el-image :src="img.i_img"></el-image>
+					<el-image :src="img.i_img" fit='cover' style="height:150px"></el-image>
 										<div style="padding: 7px;">
 						<span style="font-size:12px" @click="showImgDetail(img.a_id)">{{img.i_title}}</span>
 					</div><div class="bottom clearfix" style="padding:5px ">
@@ -113,12 +113,12 @@
 			</el-col>
   </el-tab-pane>  
   <el-tab-pane>
-    <span slot="label"><i class="el-icon-date"></i> 我的关注</span>
-    <el-col :span="6" v-for="(o, index) in 16" :key="o" class="imgcard" style="padding:15px;">
+    <span slot="label"></i> 我的关注</span>
+    <el-col :span="6" v-for="follow in list3" :key="follow.user_id" class="imgcard" style="padding:15px;">
 				<el-card :body-style="{ padding: '0px' }"  shadow="never" >
-					 <el-col><el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" ></el-avatar></el-col>
+					 <el-col><el-avatar :src="follow.user_avatar" ></el-avatar></el-col>
 										<div style="padding: 7px;">
-					<el-row ><el-col :offset="10"><span style="font-size:12px">飞天敦煌</span></el-col></el-row>
+					<el-row ><el-col :offset="10"><span style="font-size:12px"><a @click="showauthor(follow.user_id)">{{follow.user_name}}</a></span></el-col></el-row>
 
 					</div>
 					<el-row>
@@ -129,12 +129,12 @@
 					</div>
 				</el-col>
 				</el-row>
-				<el-row style="padding-bottom:7px"><el-col :offset="9	">  <el-button size="mini" round>关注</el-button></el-col></el-row>
+				
 				</el-card>
 			</el-col>
   </el-tab-pane>
   <el-tab-pane>
-    <span slot="label"><i class="el-icon-date"></i> 我发布的文章</span>
+    <span slot="label">我发布的文章</span>
  <div class="editor">
     <div class="table">
       <table cellpadding="0" cellspacing="0">
@@ -207,12 +207,6 @@
     <el-form-item label="地址" :label-width="formLabelWidth">
       <el-input v-model="detail.address" autocomplete="off"></el-input>
     </el-form-item>
-   <el-form-item label="性别" :label-width="formLabelWidth">
-  <el-radio-group v-model="detail.radio">
-    <el-radio :label="1">男</el-radio>
-    <el-radio :label="2">女</el-radio>
-  </el-radio-group>
-</el-form-item>
   </el-form>
   <div slot="footer" class="dialog-footer">
   	<el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -237,13 +231,52 @@
     <el-button type="primary" @click="change() " >确 定</el-button>
   </div>
 </el-dialog>
-    </div>
+<!-- 更改头像 -->
+  <el-dialog title="修改您的头像" :visible.sync="avatarchange">
+  <el-form :model="form">
+    <el-form-item :label-width="formLabelWidth">
+
+          <div class="inputBox">
+            <input
+              type="file"
+              @change="fileImage"
+              title="请选择图片"
+              id="file"
+              multiple
+              accept="image/png, image/jpg, image/gif, image/JPEG"
+            >点击选择图片
+          </div>
+          <div class="imgBox" v-show="imgs.length">
+            <div v-for="(img,index) in imgs" :key="img.name" class="imgContainer">
+              <img :src="img.url" alt style="width:68px">
+              <p @click="remove(index)">删除</p>
+            </div>
+          </div>
+          <button type="button" class="btn btn-info" @click="upImgs">立即上传</button>
+            <div class="imgBox" v-show="article.images.length">
+            <p class="add_notice">加入正文</p>
+            <div v-for="img in article.images" :key="img.image" class="imgContainer">
+              <img :src="img.image" style="width:48px"alt>
+              <el-button type="primary" @click="upavatar(img) " >确 定</el-button>
+            </div>
+          </div>
+          
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+  	<el-button @click="avatarchange = false">取 消</el-button>
+    <el-button type="primary" @click="upavatar() " >确 定</el-button>
+  </div>
+</el-dialog>
+</div>
+
 </template>
 <script type="text/ecmascript-6">
-import {changeName,changeDetail,changePassword,findFollow} from '@/api/user'
+import {changeName,changeDetail,changePassword,findFollow,updateavatar} from '@/api/user'
 import { mapMutations, mapGetters } from 'vuex'
 import { getTitleList, changePublish, delArticle } from '@/api/article'
 import {getimgTitleList,delImg} from '@/api/Img'
+import { upBase64 } from '@/api/file'
 export default {
 	data(){
 		var validatePass = (rule, value, callback) => {
@@ -269,6 +302,7 @@ export default {
 			dialogTableVisible: false,
 			dialogFormVisible: false,
 			dialogpswVisible: false,
+			avatarchange:false,
 			form: {
 				id: '',
 				name: '',
@@ -305,7 +339,17 @@ export default {
             published: null,
             list: [],
             list2: [],
-            list3:[]
+            list3:[],	
+            article:{
+            	images:[],
+            	a_img: '',
+            	user_id: 0,
+            },
+            imgs: [],
+            images: [], // 传递到后台的图片地址
+            savedImgs: [],
+            radio:'1',
+
 		}
 		
 	},
@@ -453,21 +497,108 @@ export default {
         }
       })
     },
+    //上传头像
+    upImgs: function() {
+      if (this.imgs.length === 0) {
+        this.SHOW_ALERT('请选择要上传图片')
+        return
+      }
+      const data = {
+        imgs: this.images,
+        path: 'article',
+        id: this.user.user_id
+      }
+      upBase64(data).then(response => {
+        const data = response.data.data
+        this.imgs = []
+        this.images = []
+        this.savedImgs = this.savedImgs.concat(data.name)
+        const images = []
+        for (const v of data.path) {
+          images.push({ image: v })
+        }
+        const oldImages = this.article.images
+        this.article.images = oldImages.concat(images)
+      })
+    },
+    remove: function(index) {
+      this.imgs.splice(index, 1)
+      this.images.splice(index, 1)
+    },
+    fileImage(e) {
+      const _this = this
+      const file = e.target.files
+      // console.log(file[0].name);
+      if (this.imgs.length > 1 || this.imgs.length + file.length > 9) {
+        this.SHOW_ALERT('上传一张头像就够了')
+        return
+      }
+      for (let i = 0; i < file.length; i++) {
+        if (this.imgs.length > 0) {
+          for (let j = 0; j < this.imgs.length; j++) {
+            if (file[i].name === this.imgs[j].name) {
+              this.SHOW_ALERT('请不要选择重复图片')
+              return
+            } else {
+              continue
+            }
+          }
+        }
+        const imgSize = file[i].size / 1024
+        if (imgSize > 500) {
+          this.SHOW_ALERT('请上传大小不要超过500KB的图片')
+          continue
+        } else {
+          const reader = new FileReader()
+          reader.readAsDataURL(file[i]) // 读出 base64
+          reader.onloadend = function() {
+            // 图片的 base64 格式, 可以直接当成 img 的 src 属性值
+            const dataURL = reader.result
+            const obj = {}
+            obj.url = dataURL
+            obj.name = file[i].name
+            _this.imgs.push(obj) // 将base64图片数据存入预览用的数组
+            _this.images.push(dataURL) // 将base64图片数据存入发送服务端用的数组
+          }
+        }
+      }
+    },
 
+    upavatar(img){
+    	var id4=this.user.user_id
+    	const form3={id:id4}
+    	form3.user_avatar=img.image
+    	updateavatar(form3).then(response => {
+    		this.user.user_avatar.a_img = response.data.data
+        this.$notify.success({
+            title: '成功',
+            message: '修改头像成功'
+          })
+      })
+    },
+    //关注者列表
     findFollowlist(id){
     	findFollow(id).then(response => {
         this.list3 = response.data.data
       })
 		},
+
+	showauthor(id) {
+      this.$router.push({
+        name: 'author', params: { id }
+      })
+    },
     },
 created: function() {
 
   },
   mounted: function() {	
   	const id=this.user.user_id
+  	var id2={id:this.user.user_id}
+  	this.radio=this.user.user_identity
     this.getList(id)
     this.getimgList(id)
-    //this.findFollowlist(id)
+    this.findFollowlist(id2)
 }
 
 }
@@ -484,6 +615,10 @@ created: function() {
     margin-bottom: 1.5rem !important;
     margin-top: 1.5rem !important;
     width:604px;
+}
+.main{
+  width: 100%;
+  min-height: 800px;
 }
 .font-12{
 	font-size:12px

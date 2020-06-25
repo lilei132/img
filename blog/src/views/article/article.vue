@@ -5,16 +5,16 @@
         <el-row > 
       <el-col :span="3">
       <div style="margin-top:5px">
-                <el-avatar src="https://photo7n.gracg.com/2001295629_1_7a3569123c04c0d0386862a8e51390cf.jpg!200x200" ></el-avatar>
+ <el-avatar :src="useravatar.user_avatar"></el-avatar>
               </div>
 </el-col>
 <el-col :span="3">
   <div style="margin-top:16px"></div>
-  <a style="font-size:16px；font-weight:700!important;"> {{article.user.user_name}} </a>
+  <a style="font-size:16px；font-weight:700!important;" @click="showauthor(article.user.user_id)"> {{article.user.user_name}} </a>
 </el-col>
   <el-col :span="2" :offset="16">
     <div style="margin-top:16px">
-    <el-button type="primary" @click="addwatch()">关注</el-button>
+    <el-button type="primary" @click="addwatch()" ref='btn1'>关注</el-button>
   </div>
   </el-col>
     </el-row>
@@ -30,9 +30,8 @@
   </el-row>
   <el-row>
     <div class="bottom clearfix" style="padding:5px ">
-            <i class="el-icon-view font-12" style="margin-right: 1rem !important;">7923</i>
-            <i class="el-icon-chat-line-round font-12" style="margin-right: 1rem !important;" >{{article.comment_num}}</i>
-            <i class="el-icon-star-off font-12" style="margin-right: 1rem !important;" >{{article.praise_num}}</i>
+            <i class="el-icon-view font-12" style="margin-right: 1rem !important;">  {{article.viewer_num}}</i>
+            <i class="el-icon-star-off font-12" style="margin-right: 1rem !important;" >  {{article.praise_num}}</i>
           </div>
 
   </el-row>
@@ -79,7 +78,8 @@
 <script>
 import { mapActions, mapMutations,mapGetters } from 'vuex'
 import comment from '@/views/components/comment.vue'
-import { getOne,addwatch,getauthor } from '@/api/article'
+import { getOne,addwatch,addpageview} from '@/api/article'
+import { getOneavatar } from '@/api/user'
 import simplemde from 'simplemde'
 import AsideBar from '@/views/layout/aside.vue'
 export default {
@@ -94,6 +94,7 @@ export default {
         comment_num: '',
         create_time: '',
         praise_num: '',
+        viewer_num:'',
         published: '',
         status: '',
         tag: {},
@@ -106,16 +107,19 @@ export default {
       follow:{
         user_id:'',
         followed_userid:''
+      },
+      shows:'已关注',
+      useravatar:{
+        user_avatar:""
       }
 
     }
   },
   components: {
-    comment,
-    AsideBar
+    comment
   },
   methods: {
-    ...mapActions(['getComment', 'addPraise']),
+    ...mapActions(['addPraise']),
     ...mapMutations(['CHANGE_CRUMBS']),
     getOne(ID) {
       getOne(ID)
@@ -123,6 +127,13 @@ export default {
           const content = response.data.data.a_content
           response.data.data.a_content = simplemde.prototype.markdown(content)
           this.article = response.data.data
+          var id3={id:this.article.user.user_id}
+
+          getOneavatar(id3).then(response=>{
+            this.useravatar=response.data.data
+          }
+
+            )
           const obj = {
             tagName: this.article.tag.tag_name,
             tagID: this.article.tag.tag_id,
@@ -141,6 +152,9 @@ export default {
       })
     },
     addwatch(){
+      var name = this.shows;
+      this.shows = this.$refs.btn1.$el.innerText;
+      this.$refs.btn1.$el.innerText = name
       this.follow.user_id = this.user.user_id
       this.follow.followed_userid=this.article.user_id
       if(this.follow.user_id==this.follow.followed_userid){
@@ -154,9 +168,19 @@ export default {
             title: '成功',
             message: '关注成功！'
           })
-      })}
-
+      })
     }
+
+    },
+    showauthor(id) {
+      this.$router.push({
+        name: 'author', params: { id }
+      })
+    },
+    addpageview(id){
+      addpageview(id)
+    }
+
   },
   computed: {
     ...mapGetters(['user']),
@@ -164,11 +188,13 @@ export default {
   created: function() {
     const id = this.$route.params.id
     this.getOne(id)
+    //addpageview(id)
+
   },
-  // mounted: function() {
-  // const id2='42'
-  // getauthor(id2)
-  // }
+  mounted: function() {
+  var id={id:this.$route.params.id}
+  this.addpageview(id)
+  }
   // mounted:{
   //   const authorid=this.article.user_id
   //   this.getauthor(authorid)

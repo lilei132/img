@@ -50,9 +50,16 @@ class Usercenter extends BaseController
         return new Response();
     }
     public function addwatch($userid,$articleid){
+        $user = Usermodel::get($user_id);
+        if (empty($user)) {
+            throw new ResourcesException();
+        }
+    }
+    public function getfollowList($userid,$articleid){
         $user = Usermodel::get($uer_id);
         if (empty($user)) {
             throw new ResourcesException();
         }
     }
+
 }

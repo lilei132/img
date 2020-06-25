@@ -11,7 +11,8 @@
         <el-col >
           <div style="margin: 0 auto ;width: 120px;margin-left:40%">
                          <div style="  margin-top: -60px;z-index: 1px; border: 3px solid #fff" class="position-absolute rounded-circle   bg-white">
-                             <img src="https://photo7n.gracg.com/2001292211_3_1e7f131ee259b607036c0a45f125bd6a.jpg!200x200" style="width: 120px;height:120px; " class="rounded-circle ">
+                           <el-avatar :src="useravatar.user_avatar" style="width: 120px;height:120px; " class="rounded-circle"></el-avatar>
+                             <!-- <img src="https://photo7n.gracg.com/2001292211_3_1e7f131ee259b607036c0a45f125bd6a.jpg!200x200" style="width: 120px;height:120px; " class="rounded-circle "> -->
                          </div>
 
                      </div>
@@ -31,7 +32,7 @@
 
     <el-col :span="6" v-for="img in list2" :key="img.a_id" class="imgcard" style="padding:7px">
         <el-card :body-style="{ padding: '0px' }"  shadow="never" >
-          <el-image :src="img.i_img"></el-image>
+          <el-image :src="img.i_img" fit='cover' style="height:150px"></el-image>
                     <div style="padding: 7px;">
             <span style="font-size:12px" @click="showImgDetail(img.i_id)">{{img.i_title}}</span>
           </div><div class="bottom clearfix" style="padding:5px ">
@@ -51,6 +52,7 @@
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 import {getimgTitleList} from '@/api/Img'
 import {addwatch} from '@/api/article'
+import { getOneavatar } from '@/api/user'
     export default {
         data(){
             return {
@@ -59,6 +61,9 @@ import {addwatch} from '@/api/article'
               follow:{
                 user_id:'',
                 followed_userid:''
+      },
+              useravatar:{
+              user_avatar:""
       }
             }
         },
@@ -67,6 +72,12 @@ import {addwatch} from '@/api/article'
     getimgList(id){
       getimgTitleList(id).then(response => {
         this.list2 = response.data.data
+        var id2={id:id}
+          getOneavatar(id2).then(response=>{
+            this.useravatar=response.data.data
+          }
+
+            )
       })
         },
     showImgDetail(id) {

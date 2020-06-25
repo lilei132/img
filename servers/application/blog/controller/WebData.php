@@ -17,10 +17,13 @@ use app\blog\model\Article;
 use app\blog\model\Imgupload;
 use think\Cache;
 use think\Request;
+use app\admin\service\User;
+use app\admin\model\User as UserModel;
 
 class WebData extends BaseController
 {
     public function addPraise($id) {
+        //$user = User::init();
         $request = Request::instance();
         $ip = $request->ip();
         $key = $ip.'_'.$id;
@@ -33,11 +36,30 @@ class WebData extends BaseController
             $article = Article::get($id);
             $article->setInc('praise_num');
         }
-        $data = WebDataModel::get(1);
-        $data->setInc('praise_num');
+        // $data = WebDataModel::get(1);
+        // $data->setInc('praise_num');
         return new Response();
     }
+
     public function addimgPraise($id) {
+        //$user = User::init();
+        $request = Request::instance();
+        $ip = $request->ip();
+        $key = $ip.'_'.$id;
+        $check = Cache::get($key);
+        if($check) {
+            throw new RepeatException('同一篇文章，一天只能点赞一次哦');
+        }
+        Cache::set($key,60*60*24);
+        if($id !=0) {
+            $article = Imgupload::get($id);
+            $article->setInc('praise_num');
+        }
+        // $data = WebDataModel::get(1);
+        // $data->setInc('praise_num');
+        return new Response();
+    }
+    public function addimgPraise2($id) {
         if($id !=0) {
             $img = Imgupload::get($id);
             $img->setInc('praise_num');

@@ -45,3 +45,18 @@ export function findFollow(data) {
     data
   })
 }
+
+export function updateavatar(data) {
+  return request({
+    url: '/admin/user/changeName2',
+    method: 'post',
+    data
+  })
+}
+export function getOneavatar(data) {
+  return request({
+    url: '/admin/user/getOneavatar',
+    method: 'post',
+    data
+  })
+}

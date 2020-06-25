@@ -34,8 +34,8 @@
             {{item.create_time}}
           </el-col>
           <el-col class="icon">
-            <i class="el-icon-chat-dot-square"></i>
-            {{item.comment_num}}
+            <i class="el-icon-view font-12"></i>
+            {{item.viewer_num}}
           </el-col>
         </el-row>
           </el-col>

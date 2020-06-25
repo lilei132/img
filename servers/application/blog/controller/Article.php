@@ -146,13 +146,11 @@ class Article extends BaseController
         Images::addImages($imgs,$article->a_id,'article');
         return new Response();
     }
-
-    public function getBing() {
-        $str = file_get_contents('http://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1');
-        $array = json_decode($str);
-        $imgUrl = $array->{"images"}[0]->{"url"};
-        $imgUrl = 'https://cn.bing.com'.$imgUrl;
-        return new Response(['data'=>$imgUrl]);
+    public function addpageview($id) {
+        
+        $article = ArticleModel::get($id);
+        $article->setInc('viewer_num');
+        
+        return new Response();
     }
-
 }

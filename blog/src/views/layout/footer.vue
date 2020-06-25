@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-footer>
-      <div class="legal center-block">© 2020 Dream team 我是姬爸</div>
+      <div class="legal center-block">© 2020 Dream team </div>
     </el-footer>
   </div>
 </template>

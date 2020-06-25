@@ -25,10 +25,10 @@
 </el-form-item>
 
   <el-form-item label="注册身份">
-    <el-radio-group v-model="form.resource">
-      <el-radio label="个人"></el-radio>
-      <el-radio label="企业"></el-radio>
-    </el-radio-group>
+  <el-radio-group v-model="form.radio" @change="getValue()">
+    <el-radio label="1">个人</el-radio>
+    <el-radio label="2">企业</el-radio>
+  </el-radio-group>
   </el-form-item>
 <!--   <el-form-item label="企业信息">
     <el-input type="textarea" v-model="form.desc"></el-input>
@@ -51,6 +51,7 @@ export default {
           name: '',
           email: '',
           password: '',
+          radio:'1'
         },
         check_result: {
         email: false,
@@ -65,9 +66,14 @@ export default {
         cpwd: '',
       },
       cpsw:'',
+      radio:'1'
       }
+
     },
     methods: {
+      getValue(){
+         console.log(this.form.radio);
+       },
       onSubmit() {
         register(this.form).then(response => {
         this.$message('注册成功，请登录')

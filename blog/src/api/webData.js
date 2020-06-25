@@ -15,3 +15,10 @@ export function addPraise(data) {
     data
   })
 }
+export function addImgPraise(data) {
+  return request({
+    url: 'blog/Web_Data/addimgPraise',
+    method: 'post',
+    data
+  })
+}

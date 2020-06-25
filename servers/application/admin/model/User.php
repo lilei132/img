@@ -39,12 +39,13 @@ class User extends BaseModel
         $user = self::get(['user_email'=>$email]);
         return $user;
     }
-    public static function registerByEmail($name,$email,$password,$passwordSalt) {
+    public static function registerByEmail($name,$email,$password,$passwordSalt,$radio) {
         return self::create([
             'user_name'=>$name,
             'user_email'=>$email,
             'user_pwd'=>$password,
             'user_pwd_salt'=>$passwordSalt,
+            'user_identity'=>$radio,
             'create_time'=>time()
         ]);
     }

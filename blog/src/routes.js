@@ -1,17 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import homePage from '@/views/layout/home.vue'
-import aboutPage from '@/views/about.vue'
-import adminPage from '@/views/admin/admin.vue'
 import articleList from '@/views/article/articleList.vue'
 import article from '@/views/article/article.vue'
-import msgborder from '@/views/components/msgborder'
 import outline from '@/views/components/outline.vue'
 import write from '@/views/components/write.vue'
-import editor from '@/views/components/editor.vue'
-import otherSeting from '@/views/components/other_seting.vue'
 import user from '@/views/components/user.vue'
-import timer from '@/views/components/timer.vue'
+
 import store from '@/store'
 import home from '@/views/home/home.vue'
 import register from '@/views/register.vue'
@@ -35,11 +30,6 @@ const routes = [
         path: '/',
         name: 'home1',
         redirect: '/articleList'
-      },
-      {
-        path: 'about',
-        name: 'about',
-        component: aboutPage
       },
       {
             path : 'home', 
@@ -106,62 +96,10 @@ const routes = [
         name: 'author',
         component: author
       },
-      {
-        path: 'timer',
-        name: 'timer',
-        component: timer
-      },
-      {
-        path: 'msgborder',
-        name: 'msgborder',
-        component: msgborder
-      }]
+
+      ]
 
   },
-  {
-    path: '/admin',
-    component: adminPage,
-    name: 'admin',
-    meta: { requireAuth: true },
-    children: [
-      {
-        path: '/admin',
-        name: 'admin',
-        redirect: '/admin/outline',
-        meta: { requireAuth: true }
-      },
-      {
-        path: '/admin/outline',
-        name: 'outline',
-        component: outline,
-        meta: { requireAuth: true }
-      },
-      {
-        path: '/admin/write',
-        name: 'write',
-        component: write,
-        meta: { requireAuth: true }
-      },
-      {
-        path: '/admin/editor',
-        name: 'editor',
-        component: editor,
-        meta: { requireAuth: true }
-      },
-      {
-        path: '/admin/otherSeting',
-        name: 'otherSeting',
-        component: otherSeting,
-        meta: { requireAuth: true }
-      },
-      {
-        path: '/admin/user',
-        name: 'user',
-        component: user,
-        meta: { requireAuth: true }
-      }
-    ]
-  }
 ]
 
 const router = new Router({

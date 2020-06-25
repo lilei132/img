@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by bianquan
- * CommonUser: ZhuYunlong
- * Email: 920200256@qq.com
- * Date: 2019/1/12
- * Time: 20:07
- */
 
 namespace app\admin\service;
 use app\lib\exception\TokenException;
@@ -26,7 +19,7 @@ class Token
     public static function init() {
         if(!self::$token) {
             self::$token = Request::instance()->header('X-Api-Token');
-            self::$tokenKey = myConfig('redisKey.userToken',md5(self::$token));
+            self::$tokenKey = myConfig('redisKey.userToken', md5(self::$token));
         }
         return self::$tokenKey;
     }
@@ -55,11 +48,17 @@ class Token
         ];
         self::$token = JWT::encode($tokenMsg, config('token.key'));
         self::$tokenKey = 'token:'.md5(self::$token);
-        
-        Redis::init()->hmset(self::$tokenKey, ['user' => $user['user_id']]);
-        //Redis::init()->hmset(self::$tokenKey,$user);
-        Redis::init()->expire(self::$tokenKey,config('token.exp'));
+        Redis::init()->set(self::$tokenKey, $user['user_id']);
+        Redis::init()->expire(self::$tokenKey, config('token.exp'));
         return self::$token;
+
+        // self::$token = JWT::encode($tokenMsg, config('token.key'));
+        // self::$tokenKey = 'token:'.md5(self::$token);
+        
+        // Redis::init()->hmset(self::$tokenKey, ['user' => $user['user_id']]);
+        // //Redis::init()->hmset(self::$tokenKey,$user);
+        // Redis::init()->expire(self::$tokenKey,config('token.exp'));
+        // return self::$token;
     }
 
 

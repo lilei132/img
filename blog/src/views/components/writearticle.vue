@@ -66,6 +66,17 @@
       <button type="button" class="btn btn-success" v-if="create" @click="addArticle">发布文章</button>
       <button type="button" class="btn btn-danger" v-if="!(create)" @click="updateArticle">更新</button>
     </el-row>
+  <el-dialog :visible.sync="zhifu"
+  width="30%"
+  style="text-align:center">
+            <div class="title">发布需求请扫描支付</div>
+            <img src='../../assets/imgs/qrcode.jpg' style="width:120px;padding:15px"> 
+            <div class="content">
+              <button type="button" class="btn btn-warning" @click="addqrArticle">支付成功</button>
+              <button type="button" class="btn btn-info" @click="zhifu=false">取消</button>
+
+        </div>
+    </el-dialog>
     </div>
   </div>
 </template>
@@ -78,6 +89,7 @@ import { getList } from '@/api/tags'
 export default {
   data() {
     return {
+      zhifu:false,
       src:"https://photo7n.gracg.com/1540168448_0_dfebed584cdb2c2c810180cca9e6c3fa.jpg",
       article: {
         a_content: '',
@@ -87,7 +99,7 @@ export default {
         outline: '',
         tag: {
           tag_id: 3,
-          tag_name: '漫坛闲聊',
+          tag_name: '漫友闲聊',
           create_time: '1970-01-01 08:00:00'
         },
         images: [],
@@ -126,6 +138,7 @@ export default {
     selectTag(tag) {
       this.article.tag = tag
       this.article.tag_id = tag.tag_id
+      console.log(this.article.tag_id)
       this.tags_box = false
     },
     stopProp(e) {
@@ -133,8 +146,19 @@ export default {
       e.stopPropagation()
     },
     addArticle() {
-      this.article.imgs = this.savedImgs
+      //this.article.imgs = this.savedImgs
       this.article.id=this.user.user_id
+       console.log(this.article.tag.tag_id)
+      if (this.article.tag.tag_id==4){
+        this.zhifu=true
+      }
+      else{
+      addArticle(this.article).then(response => {
+        this.$router.push('/articleList')
+      })}
+    },
+    addqrArticle() {
+      //this.article.imgs = this.savedImgs
       addArticle(this.article).then(response => {
         this.$router.push('/articleList')
       })
@@ -148,78 +172,7 @@ export default {
     closeBox() {
       this.tags_box = false
     },
-    // addImgArticle(img) {
-    //   const content = this.article.a_content
-    //   this.article.a_content = content + '![](' + img.image.replace(/\\/g, '/') + ')'
-    // },
-    // setBackground(img) {
-    //   this.article.a_img = img.image
-    // },
-    // fileImage(e) {
-    //   const _this = this
-    //   const file = e.target.files
-    //   // console.log(file[0].name);
-    //   if (this.imgs.length > 9 || this.imgs.length + file.length > 9) {
-    //     this.SHOW_ALERT('图片超过9九张，请分多次上传')
-    //     return
-    //   }
-    //   for (let i = 0; i < file.length; i++) {
-    //     if (this.imgs.length > 0) {
-    //       for (let j = 0; j < this.imgs.length; j++) {
-    //         if (file[i].name === this.imgs[j].name) {
-    //           this.SHOW_ALERT('请不要选择重复图片')
-    //           return
-    //         } else {
-    //           continue
-    //         }
-    //       }
-    //     }
-    //     const imgSize = file[i].size / 1024
-    //     if (imgSize > 500) {
-    //       this.SHOW_ALERT('请上传大小不要超过500KB的图片')
-    //       continue
-    //     } else {
-    //       const reader = new FileReader()
-    //       reader.readAsDataURL(file[i]) // 读出 base64
-    //       reader.onloadend = function() {
-    //         // 图片的 base64 格式, 可以直接当成 img 的 src 属性值
-    //         const dataURL = reader.result
-    //         const obj = {}
-    //         obj.url = dataURL
-    //         obj.name = file[i].name
-    //         _this.imgs.push(obj) // 将base64图片数据存入预览用的数组
-    //         _this.images.push(dataURL) // 将base64图片数据存入发送服务端用的数组
-    //       }
-    //     }
-    //   }
-    // },
-    // upImgs: function() {
-    //   if (this.imgs.length === 0) {
-    //     this.SHOW_ALERT('请选择要上传图片')
-    //     return
-    //   }
-    //   const data = {
-    //     imgs: this.images,
-    //     path: 'article',
-    //     id: this.user.user_id
-    //   }
-    //   upBase64(data).then(response => {
-    //     const data = response.data.data
-    //     this.imgs = []
-    //     this.images = []
-    //     this.savedImgs = this.savedImgs.concat(data.name)
-    //     const images = []
-    //     for (const v of data.path) {
-    //       images.push({ image: v })
-    //     }
-    //     const oldImages = this.article.images
-    //     this.article.images = oldImages.concat(images)
-    //   })
-    // },
-    // remove: function(index) {
-    //   this.imgs.splice(index, 1)
-    //   this.images.splice(index, 1)
-    // }
+
   },
   computed: {
     ...mapGetters(['user'])

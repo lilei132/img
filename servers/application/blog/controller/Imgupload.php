@@ -97,6 +97,13 @@ class Imgupload extends BaseController
         $img->delete();
         return new Response();
     }
+    public function addpageview($id) {
+        
+        $article = ImgModel::get($id);
+        $article->setInc('viewer_num');
+        
+        return new Response();
+    }
 
 
 

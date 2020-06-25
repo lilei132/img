@@ -5,7 +5,7 @@
     <el-row > 
       <el-col :span="3">
       <div style="margin-top:5px">
-                <el-avatar src="https://photo7n.gracg.com/2001295629_1_7a3569123c04c0d0386862a8e51390cf.jpg!200x200" ></el-avatar>
+                <el-avatar :src="useravatar.user_avatar"></el-avatar>
               </div>
 </el-col>
 <el-col :span="3">
@@ -14,7 +14,8 @@
 </el-col>
   <el-col :span="2" :offset="16">
     <div style="margin-top:16px">
-    <el-button type="primary" @click="addwatch()">关注</el-button>
+    <el-button type="primary" @click="addwatch()" ref='btn1' >关注</el-button>
+
   </div>
   </el-col>
     </el-row>
@@ -30,9 +31,9 @@
   </el-row>
   <el-row>
     <div class="bottom clearfix" style="padding:5px ">
-            <i class="el-icon-view font-12" style="margin-right: 1rem !important;">7923</i>
+            <i class="el-icon-view font-12" style="margin-right: 1rem !important;">  {{img.viewer_num}}</i>
             <i class="el-icon-chat-line-round font-12" style="margin-right: 1rem !important;" >{{img.comment_num}}</i>
-            <i class="el-icon-star-off font-12" style="margin-right: 1rem !important;" >{{img.praise_num}}</i>
+            <i class="el-icon-star-off font-12" style="margin-right: 1rem !important;" >  {{img.praise_num}}</i>
           </div>
 
   </el-row>
@@ -64,7 +65,7 @@
     </el-row>
     <el-row>
       <p class="praise">
-        <i class="glyphicon glyphicon-thumbs-up"></i>
+        <i class="glyphicon glyphicon-thumbs-up" @click="addimgsPraise(img.i_id)"></i>
       </p>
       <p class="praise">
         <span>累计获得{{img.praise_num}}个赞</span>
@@ -81,7 +82,8 @@
 import { mapActions, mapMutations,mapGetters} from 'vuex'
 import comment from '@/views/components/comment.vue'
 import { addwatch } from '@/api/article'
-import { getOne,addimgPraise } from '@/api/Img'
+import { getOne,addimgPraise,addpageview } from '@/api/Img'
+import { getOneavatar } from '@/api/user'
 import simplemde from 'simplemde'
 import AsideBar from '@/views/layout/aside.vue'
 export default {
@@ -96,6 +98,7 @@ export default {
         i_title: '',
         outline:'',
         praise_num: '',
+        viewer_num:'',
         published: '',
         status: '',
         tag: {},
@@ -108,6 +111,10 @@ export default {
       follow:{
         user_id:'',
         followed_userid:''
+      },
+      shows:'已关注',
+      useravatar:{
+        user_avatar:""
       }
     }
   },
@@ -116,7 +123,7 @@ export default {
     AsideBar
   },
   methods: {
-    ...mapActions(['getComment', 'addImgPraise']),
+    ...mapActions(['addimgPraise']),
     ...mapMutations(['CHANGE_CRUMBS']),
     getOne(ID) {
       getOne(ID)
@@ -124,6 +131,15 @@ export default {
           const content = response.data.data.i_content
           response.data.data.i_content = simplemde.prototype.markdown(content)
           this.img = response.data.data
+          //var id3=this.img.user.user_id
+          var id3={id:this.img.user.user_id}
+
+          getOneavatar(id3).then(response=>{
+            this.useravatar=response.data.data
+          }
+
+            )
+
           const obj = {
             tagName: this.img.tag.tag_name,
             tagID: this.img.tag.tag_id,
@@ -135,7 +151,16 @@ export default {
           this.SHOW_ALERT(error.response.data.msg)
         })
     },
+    addimgsPraise(id) {
+      this.addimgPraise(id).then(() => {
+        this.img.praise_num++
+      })
+    },
     addwatch(){
+      var name = this.shows;
+      this.shows = this.$refs.btn1.$el.innerText;
+
+      this.$refs.btn1.$el.innerText = name
       this.follow.user_id = this.user.user_id
       this.follow.followed_userid=this.img.user_id
       if(this.follow.user_id==this.follow.followed_userid){
@@ -161,12 +186,19 @@ export default {
 },
 computed: {
     ...mapGetters(['user']),
+    useravatar(){
+      return this.useravatar.user_avatar
+    },
     },
   created: function() {
     const id = this.$route.params.id
     this.getOne(id)
 
 },
+  mounted: function() {
+  var id={id:this.$route.params.id}
+  addpageview(id)
+  }
 
 
 }

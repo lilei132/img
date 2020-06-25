@@ -168,6 +168,7 @@ export default {
       e = e || event
       e.stopPropagation()
     },
+    
     addArticle() {
       this.article.imgs = this.savedImgs
       this.article.id=this.user.user_id

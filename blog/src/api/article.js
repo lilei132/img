@@ -83,11 +83,10 @@ export function updateArticle(data) {
     data
   })
 }
-
-export function getBing(query = null) {
+export function addpageview(data) {
   return request({
-    url: '/blog/article/getBing',
-    method: 'get',
-    params: query
+    url: '/blog/article/addpageview',
+    method: 'post',
+    data
   })
 }

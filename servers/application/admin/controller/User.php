@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by bianquan
- * CommonUser: ZhuYunlong
- * Email: 920200256@qq.com
- * Date: 2019/1/12
- * Time: 20:07
- */
+
 
 namespace app\admin\controller;
 
@@ -32,8 +26,8 @@ class User extends BaseController
     /**
      * @Api(用户注册,1,POST)
      */
-    public function register($name,$email,$password) {
-        $result = UserService::register($name,$email,$password);
+    public function register($name,$email,$password,$radio) {
+        $result = UserService::register($name,$email,$password,$radio);
         return new Response(['msg'=>'注册成功','data'=>$result]);
     }
 
@@ -124,6 +118,31 @@ class User extends BaseController
         $user->save();
         return new Response();
     }
+    public function updateavatar($id,$user_avatar) {
+        $user = usermodel::get($id);
+        if(empty($avator)) {
+            throw new ResourcesException();
+        }
+        $user->user_avatar = $user_avatar;
+        $user->save();
+        return new Response();
+    }
+        public function changeName2($id,$user_avatar) {
+        $user = UserModel::get($id);
+        if(empty($user)) {
+            throw new ResourcesException();
+        }
+        $user->user_avatar = $user_avatar;
+        $user->save();
+        return new Response(['data'=>$user->user_avatar]);
+    }
+        public function getOneavatar($id) {
+
+            $user = UserModel::get($id);
+            return new Response(['data'=>$user]);
+
+        }
+    
     
 
 

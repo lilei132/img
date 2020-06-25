@@ -1,6 +1,6 @@
 
 import { getStorage, setStorage } from '@/utils/storage'
-import { get as getWebData, addPraise } from '@/api/webData'
+import { get as getWebData, addPraise,addImgPraise } from '@/api/webData'
 import {get as addimgPraise} from '@/api/Img'
 const actions = {
 
@@ -16,10 +16,10 @@ const actions = {
     // 判断是否点赞
     const add_praise = id + '_add_praise'
     return new Promise((resolve, reject) => {
-      // if (getStorage(add_praise)) {
-      //   commit('SHOW_ALERT', '试试点赞其他文章吧！')
-      //   reject()
-      // } else {
+      if (getStorage(add_praise)) {
+        commit('SHOW_ALERT', '试试点赞其他文章吧！')
+        reject()
+      } else {
         setStorage(add_praise, '点赞成功！')
         const data = { id }
         addPraise(data).then(response => {
@@ -27,27 +27,32 @@ const actions = {
           commit('SHOW_MESSAGE', '点赞成功')
           resolve()
         })
-      
+      }
     })
   },
-  addImgPraise({ commit }, id) {
+
+  addimgPraise({ commit }, id) {
     // 判断是否点赞
     const add_praise = id + '_add_praise'
     return new Promise((resolve, reject) => {
-      // if (getStorage(add_praise)) {
-      //   commit('SHOW_ALERT', '试试点赞其他文章吧！')
-      //   reject()
-      // } else {
+      if (getStorage(add_praise)) {
+        commit('SHOW_ALERT', '试试点赞其他文章吧！')
+        reject()
+      } else {
         setStorage(add_praise, '点赞成功！')
         const data = { id }
-        addimgPraise(data).then(response => {
+        addImgPraise(data).then(response => {
           commit('ADD_PRAISE', id)
           commit('SHOW_MESSAGE', '点赞成功')
           resolve()
-        })
+        }
       
-    })
-  },
+    )
+      }
+  })
 }
+}
+
+
 
 export default actions

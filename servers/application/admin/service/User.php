@@ -66,14 +66,14 @@ class User
         }
     }
 
-    public static function register($name,$email,$password) {
+    public static function register($name,$email,$password,$radio) {
         $checkEmail = UserModel::getByEmail($email);
         if ($checkEmail) throw new LoginException(['msg'=>'邮箱已被注册']);
         $checkName = UserModel::getByName($name);
         if ($checkName) throw new LoginException(['msg'=>'用户名已被使用']);
         $passwordSalt = getRandChar(32);
         $password = self::generatePassword($password,$passwordSalt);
-        $result = UserModel::registerByEmail($name,$email,$password,$passwordSalt);
+        $result = UserModel::registerByEmail($name,$email,$password,$passwordSalt,$radio);
         WebData::get(1)->setInc('user_num');
         return $result;
     }
