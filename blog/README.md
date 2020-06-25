@@ -15,7 +15,7 @@ npm run dev
 npm run build
 ```
 后端：
-1.  将bianquan.sql导入到mysql数据库中
+1.  将tvcms.sql导入到mysql数据库中
 2.  修改请到MySQL中修改
 3.  后台改用thinkPHP5框架，进入servers文件夹，composer install，或者请自行下载tp5的核心文件thinkphp文件夹，放到\bianquan-blog\servers下。
 4.  到\bianquan-blog\servers\application下修改database.php文件的数据库地址、名称和密码为自己的。
@@ -38,80 +38,6 @@ npm run build
 3.  评论被回复邮件通知还是半成品；
 4.  搜索功能未完成；
 
-
-**文件目录**
-```
-├──node_modules// 项目依赖的模块    
-├── src// 源码目录
-│ ├──  assets// 资源目录
-│ ├── components// vue公共组件
-│ │ ├── header.vue// 前台头部组件
-│ │ ├── footer.vue// 前台底部组件
-│ │ ├── aside.vue// 前台侧边栏组件
-│ │ ├── login.vue// 前台登录、注册页面组件
-│ │ ├── articleList.vue// 前台文章列表页面组件
-│ │ ├── msgborder.vue// 前台留言板页面组件
-│ │ ├── project.vue// 前台实验室页面组件
-│ │ ├── timer.vue// 前台时间轴页面组件
-│ │ ├── about.vue// 前台关于页面组件
-│ │ ├── comment.vue// 前台评论区页面组件
-│ │ ├── components.vue// 通用alert、提示框、前台搜索框组件
-│ │ ├── all_images.vue// 后台所有图片弹框组件
-│ │ ├── admin_aside.vue// 后台侧边导航栏组件
-│ │ ├── admin_header.vue// 后台头部组件
-│ │ ├── outline.vue// 后台网站概要页面组件
-│ │ ├── user.vue// 后台个人中心页面组件
-│ │ ├── write.vue// 后台发布文章页面组件
-│ │ ├── editor.vue// 后台编辑文章页面组件
-│ │ ├── editor_comment.vue// 后台评论管理页面组件
-│ │ ├── menber_list.vue// 后台会员管理页面组件
-│ │ ├── imgs_list.vue// 后台图片管理页面组件
-│ │ ├── other_seting.vue// 后台其他设置页面组件
-│ │ └── lab.vue// 后台实验室页面组件
-│ ├──views// 前后台根组件
-│ │ ├── admin.vue// 后台根组件
-│ │ └── home.vue// 前台根组件
-│ ├── App.vue// 页面入口文件（根组件）
-│ ├── routes.js// 页面路由操作文件
-│ ├── vuex// 页面数据仓库文件夹
-│ │ ├── actions.js// 异步操作文件
-│ │ ├── mutations.js// 同步操作文件
-│ │ ├── state.js// 数据状态存储文件
-│ │ ├── common.js// 公用函数文件
-│ │ └── store.js// 数据仓库文件
-│ └── main.js// 程序入口文件（入口js文件）
-├── bianquan.sql// 数据库语句
-├── servers// 后台服务端文件夹
-│ ├── application//后台应用文件夹
-│ │ └── index// index模块
-│ │   ├── controller// index控制器
-│ │   │ ├── About.php// about类
-│ │   │ ├── Article.php// Article类
-│ │   │ ├── Comment.php// Comment类
-│ │   │ ├── Images.php// Images类
-│ │   │ └── ...略
-│ │   └── model// index模型
-│ │     ├── About.php// about类
-│ │     ├── Article.php// Article类
-│ │     ├── Comment.php// Comment类
-│ │     ├── Images.php// Images类
-│ │     └── ...略
-│ ├── extend//扩展文件夹
-│ ├── public//公共文件夹
-│ ├── thinkphp//框架核心文件夹，需下载
-│ ├── vendor//第三方类扩展文件夹
-│ └── ...其余略，具体参考thinkPHP5目录
-├── static// 静态文件，比如一些图片，json数据等
-├── .babelrc// ES6语法编译配置
-├── .editorconfig// 定义代码格式
-├── .gitignore// git上传需要忽略的文件格式
-├── index.html// 入口页面
-├── package.json// 项目基本信息
-├── README.md// 项目说明
-```
-**组件结构图：**
-![](https://github.com/920200256/bianquan-blog/blob/master/static/imgs/20180405/jiegoutu.jpg)
-**主要页面展示：**
 
 
 

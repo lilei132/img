@@ -10,10 +10,7 @@
 
 ## 项目代码
 
-* [GitHub](https://github.com/920200256/TVcms)
-
-## 项目架构
-![](./doc/pic/system_pic1.png)    
+## 项目架构  
 
 ## 使用技术栈
 
@@ -40,7 +37,7 @@
     
 2. 配置数据库：
     * 后端数据库参考TP5填写参数
-    * 将servers/application下的copy_config.php和copy_database.php重命名为config.php和database.php
+
     * 将TVcms.sql文件导入自己的数据库中
 
 
@@ -54,7 +51,7 @@
 4. 配置前端
 
     命令行返回项目根目录
-	admin管理后台模块，修改admin/config/文件夹下的dep.env.js、dev.env.js、prod.env.js中BASE_API修改为自己的地址
+	admin管理后台模块，修改admin/config/ 与 blog/config/ 文件夹下的dep.env.js、dev.env.js、prod.env.js中BASE_API修改为自己的地址
     ```bash
 	cd admin
     npm install//安装不成功可以用cnpm install
@@ -85,7 +82,15 @@
 目前一直为dev版，细节及功能都还待修改丰富中……
 
 
-## 相关截图
+## 基础环境配置
+1   安装npm    网站下载就好
+2   安装element   npm i element-ui –S  
+    安装网站介绍(https://element.eleme.cn/#/zh-CN/component/installation)
+
+3   安装vue环境 npm install vue
+4   安排php环境 window phpstudy  mac：MDsever 下载软件集成环境，直接下载安装包
+5   php 启动环境 为 ngix+redis+php+mysql
+
 
 
 ## 致谢
